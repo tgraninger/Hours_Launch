@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <sqlite3.h>
 #import "Events.h"
+#import <CoreData/CoreData.h>
 
 
 @interface DAO : NSObject
