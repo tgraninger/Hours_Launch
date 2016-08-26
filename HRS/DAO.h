@@ -7,19 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Events.h"
 #import <CoreData/CoreData.h>
-
+#import "Job.h"
+#import "Shift.h"
 
 @interface DAO : NSObject
 
-@property (nonatomic, retain) NSMutableArray *storedEventsArray;
+@property (nonatomic, retain) NSMutableArray *arrayOfJobs;
+@property (nonatomic, retain) NSManagedObjectModel *model;
+@property (nonatomic, retain) NSManagedObjectContext *context;
 
 + (instancetype) sharedInstance;
-- (void)addNewEvent:(Events *)event;
 - (double)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
-- (void)editEvent:(Events *)event;
-- (void)deleteEvent:(Events *)event atIndex:(NSUInteger)index;
+- (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage;
+- (void)addNewShift:(NSString *)name start:(NSString *)start end:(NSString *)end;
+
 //- (void)markAsPaid:(Events *)event;
 
 @end

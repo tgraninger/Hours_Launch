@@ -146,14 +146,8 @@
 }
 
 - (IBAction)addEvent:(id)sender {
-  self.event.hours = [NSString stringWithFormat:@"%.02f",[self.dao hoursBetween:date1 and:date2]];
-  if (_edit) {
-    [self.dao editEvent:self.event];
-    [self.navigationController popViewControllerAnimated:YES];
-  } else {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.dao addNewEvent:self.event];
-  }
+
+  
 }
 
 - (void)didReceiveMemoryWarning {

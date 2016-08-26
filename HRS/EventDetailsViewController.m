@@ -27,12 +27,14 @@
     [bottomBorder setBorderColor:[UIColor blueColor].CGColor];
     [layer addSublayer:bottomBorder];
   }
-  NSLog(@"hours: %@",self.selectedEvent.hours);
-  self.title = self.selectedEvent.name;
-  self.dateLabel.text = self.selectedEvent.date;
-  self.hoursLabel.text = self.selectedEvent.hours;
-  self.startLabel.text = self.selectedEvent.callTime;
-  self.outLabel.text = self.selectedEvent.outTime;
+  // DAO method to parse date data...
+  // Parse dates into strings..
+//  NSMutableDictionary *shiftData = [DAO sharedInstance];
+//  NSLog(@"hours: %@",self.selectedShift.hours);
+//  self.dateLabel.text = self.selectedShift.date;
+//  self.hoursLabel.text = self.selectedShift.hours;
+//  self.startLabel.text = self.selectedShift.callTime;
+//  self.outLabel.text = self.selectedShift.outTime;
   
 
 }

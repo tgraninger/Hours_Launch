@@ -24,6 +24,7 @@
 		CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068C91D36CDC5003C1B95 /* DAO.m */; };
 		CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */; };
 		CE5068F61D36EE80003C1B95 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F51D36EE80003C1B95 /* AddEventViewController.m */; };
+		CE9FF4F91D70BCBD007536A2 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF4F81D70BCBD007536A2 /* TabBarViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		CE5068F41D36EE80003C1B95 /* AddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
 		CE5068F51D36EE80003C1B95 /* AddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
+		CE9FF4F71D70BCBD007536A2 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		CE9FF4F81D70BCBD007536A2 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,8 @@
 				CE2529FD1D3D61F6007384BE /* EventDetailsViewController.m */,
 				CE5068F41D36EE80003C1B95 /* AddEventViewController.h */,
 				CE5068F51D36EE80003C1B95 /* AddEventViewController.m */,
+				CE9FF4F71D70BCBD007536A2 /* TabBarViewController.h */,
+				CE9FF4F81D70BCBD007536A2 /* TabBarViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 			files = (
 				BA691AEB1D70AD310090F872 /* Job.m in Sources */,
 				CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */,
+				CE9FF4F91D70BCBD007536A2 /* TabBarViewController.m in Sources */,
 				CE2529F51D3D45B2007384BE /* Events.m in Sources */,
 				CE5068B31D36C578003C1B95 /* StoredEventsTableViewController.m in Sources */,
 				CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */,
