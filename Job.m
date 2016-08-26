@@ -2,11 +2,12 @@
 //  Job.m
 //  HRS
 //
-//  Created by Pratap Pandit on 8/26/16.
+//  Created by Thomas on 8/26/16.
 //  Copyright © 2016 ThomasGraninger. All rights reserved.
 //
 
 #import "Job.h"
+#import "Shift.h"
 
 @implementation Job
 

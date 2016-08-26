@@ -2,7 +2,7 @@
 //  Job+CoreDataProperties.m
 //  HRS
 //
-//  Created by Pratap Pandit on 8/26/16.
+//  Created by Thomas on 8/26/16.
 //  Copyright © 2016 ThomasGraninger. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,8 +14,8 @@
 @implementation Job (CoreDataProperties)
 
 @dynamic employer;
-@dynamic jobTitle;
 @dynamic hourlyWage;
+@dynamic jobTitle;
 @dynamic overtimeWage;
 @dynamic shifts;
 

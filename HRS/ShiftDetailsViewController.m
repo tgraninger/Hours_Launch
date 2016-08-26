@@ -6,13 +6,13 @@
 //  Copyright © 2016 ThomasGraninger. All rights reserved.
 //
 
-#import "EventDetailsViewController.h"
+#import "ShiftDetailsViewController.h"
 
-@interface EventDetailsViewController ()
+@interface ShiftDetailsViewController ()
 
 @end
 
-@implementation EventDetailsViewController
+@implementation ShiftDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,13 +29,7 @@
   }
   // DAO method to parse date data...
   // Parse dates into strings..
-//  NSMutableDictionary *shiftData = [DAO sharedInstance];
-//  NSLog(@"hours: %@",self.selectedShift.hours);
-//  self.dateLabel.text = self.selectedShift.date;
-//  self.hoursLabel.text = self.selectedShift.hours;
-//  self.startLabel.text = self.selectedShift.callTime;
-//  self.outLabel.text = self.selectedShift.outTime;
-  
+
 
 }
 

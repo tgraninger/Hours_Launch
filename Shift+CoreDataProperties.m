@@ -2,7 +2,7 @@
 //  Shift+CoreDataProperties.m
 //  HRS
 //
-//  Created by Pratap Pandit on 8/26/16.
+//  Created by Thomas on 8/26/16.
 //  Copyright © 2016 ThomasGraninger. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,8 +13,8 @@
 
 @implementation Shift (CoreDataProperties)
 
-@dynamic startTime;
 @dynamic endTime;
+@dynamic startTime;
 @dynamic job;
 
 @end
