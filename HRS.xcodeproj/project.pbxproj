@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA691ADE1D70A6250090F872 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA691ADD1D70A6250090F872 /* CoreData.framework */; };
+		BA691AE11D70A7AB0090F872 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA691ADF1D70A7AB0090F872 /* Model.xcdatamodeld */; };
+		BA691AEA1D70AD310090F872 /* Job+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = BA691AE31D70AD310090F872 /* Job+CoreDataProperties.m */; };
+		BA691AEB1D70AD310090F872 /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = BA691AE51D70AD310090F872 /* Job.m */; };
+		BA691AEC1D70AD310090F872 /* Shift+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = BA691AE71D70AD310090F872 /* Shift+CoreDataProperties.m */; };
+		BA691AED1D70AD310090F872 /* Shift.m in Sources */ = {isa = PBXBuildFile; fileRef = BA691AE91D70AD310090F872 /* Shift.m */; };
 		CE2529F51D3D45B2007384BE /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2529F41D3D45B2007384BE /* Events.m */; };
-		CE2529F71D3D4C88007384BE /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2529F61D3D4C88007384BE /* libsqlite3.0.tbd */; };
-		CE2529FB1D3D594A007384BE /* StoredEvents.db in Resources */ = {isa = PBXBuildFile; fileRef = CE2529FA1D3D594A007384BE /* StoredEvents.db */; };
 		CE2529FE1D3D61F6007384BE /* EventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2529FD1D3D61F6007384BE /* EventDetailsViewController.m */; };
 		CE5068AD1D36C578003C1B95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068AC1D36C578003C1B95 /* main.m */; };
 		CE5068B01D36C578003C1B95 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068AF1D36C578003C1B95 /* AppDelegate.m */; };
@@ -23,6 +27,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA691ADD1D70A6250090F872 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BA691AE01D70A7AB0090F872 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		BA691AE21D70AD310090F872 /* Job+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Job+CoreDataProperties.h"; sourceTree = "<group>"; };
+		BA691AE31D70AD310090F872 /* Job+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Job+CoreDataProperties.m"; sourceTree = "<group>"; };
+		BA691AE41D70AD310090F872 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Job.h; sourceTree = "<group>"; };
+		BA691AE51D70AD310090F872 /* Job.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Job.m; sourceTree = "<group>"; };
+		BA691AE61D70AD310090F872 /* Shift+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Shift+CoreDataProperties.h"; sourceTree = "<group>"; };
+		BA691AE71D70AD310090F872 /* Shift+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Shift+CoreDataProperties.m"; sourceTree = "<group>"; };
+		BA691AE81D70AD310090F872 /* Shift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shift.h; sourceTree = "<group>"; };
+		BA691AE91D70AD310090F872 /* Shift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shift.m; sourceTree = "<group>"; };
 		CE2529F31D3D45B2007384BE /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		CE2529F41D3D45B2007384BE /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
 		CE2529F61D3D4C88007384BE /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -52,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2529F71D3D4C88007384BE /* libsqlite3.0.tbd in Frameworks */,
+				BA691ADE1D70A6250090F872 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +76,15 @@
 		CE50689F1D36C578003C1B95 = {
 			isa = PBXGroup;
 			children = (
+				BA691AE21D70AD310090F872 /* Job+CoreDataProperties.h */,
+				BA691AE31D70AD310090F872 /* Job+CoreDataProperties.m */,
+				BA691AE41D70AD310090F872 /* Job.h */,
+				BA691AE51D70AD310090F872 /* Job.m */,
+				BA691AE61D70AD310090F872 /* Shift+CoreDataProperties.h */,
+				BA691AE71D70AD310090F872 /* Shift+CoreDataProperties.m */,
+				BA691AE81D70AD310090F872 /* Shift.h */,
+				BA691AE91D70AD310090F872 /* Shift.m */,
+				BA691ADD1D70A6250090F872 /* CoreData.framework */,
 				CE5068AA1D36C578003C1B95 /* HRS */,
 				CE5068A91D36C578003C1B95 /* Products */,
 			);
@@ -78,6 +101,7 @@
 		CE5068AA1D36C578003C1B95 /* HRS */ = {
 			isa = PBXGroup;
 			children = (
+				BA691ADF1D70A7AB0090F872 /* Model.xcdatamodeld */,
 				CE5068C41D36CD89003C1B95 /* CustomClasses */,
 				CE5068F01D36E50F003C1B95 /* CoreData */,
 				CE5068C31D36CD83003C1B95 /* Data */,
@@ -210,7 +234,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE5068BB1D36C578003C1B95 /* LaunchScreen.storyboard in Resources */,
-				CE2529FB1D3D594A007384BE /* StoredEvents.db in Resources */,
 				CE5068B81D36C578003C1B95 /* Assets.xcassets in Resources */,
 				CE5068B61D36C578003C1B95 /* Main.storyboard in Resources */,
 			);
@@ -223,14 +246,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA691AEB1D70AD310090F872 /* Job.m in Sources */,
 				CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */,
 				CE2529F51D3D45B2007384BE /* Events.m in Sources */,
 				CE5068B31D36C578003C1B95 /* StoredEventsTableViewController.m in Sources */,
 				CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */,
 				CE5068B01D36C578003C1B95 /* AppDelegate.m in Sources */,
+				BA691AEC1D70AD310090F872 /* Shift+CoreDataProperties.m in Sources */,
+				BA691AE11D70A7AB0090F872 /* Model.xcdatamodeld in Sources */,
 				CE5068AD1D36C578003C1B95 /* main.m in Sources */,
+				BA691AEA1D70AD310090F872 /* Job+CoreDataProperties.m in Sources */,
 				CE2529FE1D3D61F6007384BE /* EventDetailsViewController.m in Sources */,
 				CE5068F61D36EE80003C1B95 /* AddEventViewController.m in Sources */,
+				BA691AED1D70AD310090F872 /* Shift.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +412,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BA691ADF1D70A7AB0090F872 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BA691AE01D70A7AB0090F872 /* Model.xcdatamodel */,
+			);
+			currentVersion = BA691AE01D70A7AB0090F872 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = ../Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CE5068A01D36C578003C1B95 /* Project object */;
 }

@@ -10,7 +10,6 @@
 
 @implementation DAO
 {
-  sqlite3 *storedEvents;
   NSString *databaseFileName;
 }
 
@@ -18,7 +17,7 @@
   static DAO *_sharedInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _sharedInstance = [[DAO alloc] customInit];
+    _sharedInstance = [[DAO alloc] customInit];         //Implement CoreData instead of SQLite
   });
   
   return _sharedInstance;
