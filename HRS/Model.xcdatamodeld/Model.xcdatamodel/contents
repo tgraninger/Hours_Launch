@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+    <entity name="Events" representedClassName="Events" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="estEnd" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="estHours" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="estStart" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="keY" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="payment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="events" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="times" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Times" inverseName="events" inverseEntity="Times" syncable="YES"/>
+    </entity>
+    <entity name="Payment" representedClassName="Payment" parentEntity="Events" syncable="YES">
+        <attribute name="actPay" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="estPay" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="eventKey" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="payDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="payStatus" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Events" inverseName="payment" inverseEntity="Events" syncable="YES"/>
+    </entity>
+    <entity name="Times" representedClassName="Times" parentEntity="Events" syncable="YES">
+        <attribute name="actHours" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="actIn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="actOut" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="eventKey" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="events" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Events" inverseName="times" inverseEntity="Events" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Events" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Times" positionX="-45" positionY="0" width="128" height="120"/>
+        <element name="Payment" positionX="-27" positionY="18" width="128" height="135"/>
+    </elements>
+</model>
