@@ -36,6 +36,8 @@
   self.context = [[NSManagedObjectContext alloc]init];
   //  self.context.undoManager
   [self.context setPersistentStoreCoordinator:psc];
+  self.arrayOfJobs = [NSMutableArray array];
+  [self hardcodeValues];
   [self fetchDataFromContext];
   
   return self;
@@ -64,6 +66,19 @@
 //  Handle result...
 }
 
+- (void)createObjectForJobInContext:(NSArray *)jobs {
+  for (Job *job in jobs) {
+    JobObject *jobToAdd = [[JobObject alloc]init];
+    jobToAdd.employer = job.employer;
+    jobToAdd.jobTitle = job.jobTitle;
+    jobToAdd.wage = job.hourlyWage;
+    jobToAdd.otWage = job.overtimeWage;;
+    jobToAdd.shifts = [NSMutableArray arrayWithArray:[job.shifts allObjects]];
+    NSLog(@"%@",jobToAdd.employer);
+    [self.arrayOfJobs addObject:jobToAdd];
+  }
+}
+
 - (void)hardcodeValues {
   NSNumber *wr = [NSNumber numberWithInt:30];
   NSNumber *ot = [NSNumber numberWithInt:45];
@@ -76,7 +91,8 @@
   [newJob setJobTitle:jobTitle];
   [newJob setHourlyWage:wage];
   [newJob setOvertimeWage:otWage];
-  [self.arrayOfJobs addObject:newJob];
+  NSArray *array = [NSArray arrayWithObject:newJob];
+  [self createObjectForJobInContext:array];
   [self saveChanges];
 }
 

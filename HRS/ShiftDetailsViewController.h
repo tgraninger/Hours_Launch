@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DAO.h"
-#import "Job.h"
-#import "Shift.h"
+#import "JobObject.h"
+#import "ShiftObject.h"
 
-@interface EventDetailsViewController : UIViewController
+@interface ShiftDetailsViewController : UIViewController
 
-@property (nonatomic, retain) Job *selectedJob;
-@property (nonatomic, retain) Shift *selectedShift;
+@property (nonatomic, retain) JobObject *selectedJob;
+@property (nonatomic, retain) ShiftObject *selectedShift;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startLabel;

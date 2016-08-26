@@ -2,18 +2,16 @@
 //  Shift.h
 //  HRS
 //
-//  Created by Pratap Pandit on 8/26/16.
+//  Created by Thomas on 8/26/16.
 //  Copyright © 2016 ThomasGraninger. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-
-@class Job;
+#import "Job.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Shift : NSManagedObject
+@interface Shift : Job
 
 // Insert code here to declare functionality of your managed object subclass
 

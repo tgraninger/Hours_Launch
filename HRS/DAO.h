@@ -10,6 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "Job.h"
 #import "Shift.h"
+#import "JobObject.h"
+#import "ShiftObject.h"
 
 @interface DAO : NSObject
 
@@ -22,6 +24,7 @@
 - (void)addNewShift:(NSString *)name start:(NSString *)start end:(NSString *)end;
 - (NSMutableDictionary *)parseDatesForShift:(Shift *)selectedShift;
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
+- (NSString *)formatDateToString:(NSDate *)date;
 
 //- (void)markAsPaid:(Events *)event;
 
