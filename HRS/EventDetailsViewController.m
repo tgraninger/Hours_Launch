@@ -29,13 +29,11 @@
   }
   // DAO method to parse date data...
   // Parse dates into strings..
-//  NSMutableDictionary *shiftData = [DAO sharedInstance];
-//  NSLog(@"hours: %@",self.selectedShift.hours);
-//  self.dateLabel.text = self.selectedShift.date;
-//  self.hoursLabel.text = self.selectedShift.hours;
-//  self.startLabel.text = self.selectedShift.callTime;
-//  self.outLabel.text = self.selectedShift.outTime;
-  
+  NSMutableDictionary *shiftData = [[DAO sharedInstance]parseDatesForShift:self.selectedShift];
+  self.dateLabel.text = [shiftData objectForKey:@"date"];
+  self.hoursLabel.text = [shiftData objectForKey:@"hours"];
+  self.startLabel.text = [shiftData objectForKey:@"start"];
+  self.outLabel.text = [shiftData objectForKey:@"end"];
 
 }
 

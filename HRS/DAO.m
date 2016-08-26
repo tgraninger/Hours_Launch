@@ -49,11 +49,11 @@
 
 - (void)fetchDataFromContext{
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES '.*'"];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"employer MATCHES '.*'"];
   [fetchRequest setPredicate:predicate];
-  NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
-  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
-  NSEntityDescription *entity = [[self.model entitiesByName]objectForKey:@"Events"];
+//  NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
+//  [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+  NSEntityDescription *entity = [[self.model entitiesByName]objectForKey:@"Job"];
   [fetchRequest setEntity:entity];
   NSError *error = nil;
   NSArray *result = [[self context] executeFetchRequest:fetchRequest error:&error];;
@@ -62,6 +62,12 @@
     abort();
   }
 //  Handle result...
+}
+
+- (void)hardcodeValues {
+  NSNumber *wr = [NSNumber numberWithInt:30];
+  NSNumber *ot = [NSNumber numberWithInt:45];
+  [self addJob:@"TurnToTech" title:@"Developer" wageRate:wr otWage:ot];
 }
 
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage {
@@ -81,12 +87,37 @@
   [self saveChanges];
 }
 
+//  Invoke this method in shift details view to display dates and times for shift...
 - (NSMutableDictionary *)parseDatesForShift:(Shift *)selectedShift {
   NSMutableDictionary *parsedData = [[NSMutableDictionary alloc]init];
+  NSArray *array;
+  NSNumber *hours = [self hoursBetween:selectedShift.startTime and:selectedShift.endTime];
+  NSString *date;
+  NSString *start = [self formatDateToString:selectedShift.startTime];
+  NSString *end = [self formatDateToString:selectedShift.endTime];
   
-  
-  return 0;
+  array = [start componentsSeparatedByString:@" "];
+  date = [array firstObject];
+  start = [array lastObject];
+  array = nil;
+  array = [end componentsSeparatedByString:@" "];
+  end = [array lastObject];
+
+  [parsedData setObject:date forKey:@"date"];
+  [parsedData setObject:start forKey:@"start"];
+  [parsedData setObject:end forKey:@"end"];
+  [parsedData setObject:hours forKey:@"hours"];
+
+  return parsedData;
 }
+
+- (NSString *)formatDateToString:(NSDate *)date {
+  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+  [formatter setDateFormat:@"MM-dd-yyyy HH:mm"];
+  NSString *stringFromDate = [formatter stringFromDate:date];
+  return stringFromDate;
+}
+
 
 - (void)saveChanges {
   NSError *err = nil;
@@ -101,11 +132,11 @@
 //  sort stored events by date - ascending.
 }
 
-
-- (double)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate {
+- (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate {
   NSTimeInterval distanceBetweenDates = [secondDate timeIntervalSinceDate:firstDate];
   double secInHr = 3600;
-  double hours = distanceBetweenDates / secInHr;
+  double hrs = distanceBetweenDates / secInHr;
+  NSNumber *hours = [NSNumber numberWithDouble:hrs];
   return hours;
 }
 
