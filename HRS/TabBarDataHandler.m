@@ -14,9 +14,8 @@
   static TabBarDataHandler *_sharedInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _sharedInstance = [[TabBarDataHandler alloc] customInit];         //Implement CoreData instead of SQLite
+    _sharedInstance = [[TabBarDataHandler alloc]customInit];         //Implement CoreData instead of SQLite
   });
-  
   return _sharedInstance;
 };
 

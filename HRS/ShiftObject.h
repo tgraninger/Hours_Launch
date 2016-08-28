@@ -10,9 +10,9 @@
 
 @interface ShiftObject : NSObject
 
-@property (nonatomic, retain) NSDate *date;
-@property (nonatomic, retain) NSDate *startTime;
-@property (nonatomic, retain) NSDate *endTime;
+@property (nonatomic, retain) NSString *date;
+@property (nonatomic, retain) NSString *startTime;
+@property (nonatomic, retain) NSString *endTime;
 @property (nonatomic, retain) NSNumber *hours;
 
 @end

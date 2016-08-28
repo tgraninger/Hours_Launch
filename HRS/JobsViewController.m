@@ -8,7 +8,6 @@
 
 #import "JobsViewController.h"
 #import "DAO.h"
-#import "Events.h"
 #import "CustomTableViewCell.h"
 #import "ShiftDetailsViewController.h"
 #import "AddNewShiftViewController.h"
@@ -18,7 +17,6 @@
 
 @property (nonatomic, retain) DAO *dao;
 @property (nonatomic, retain) NSIndexPath *objectIndex;
-@property (nonatomic, retain) AddNewShiftViewController *addEventVC;
 
 @end
 
@@ -30,7 +28,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.dao = [DAO sharedInstance];
-  self.addEventVC.edit = NO;
 }
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -48,11 +45,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
   JobObject *job = [self.dao.arrayOfJobs objectAtIndex:indexPath.row];
-//  NSArray *day = [job.employer componentsSeparatedByString:@","];
-//  NSArray *call = [job.jobTitle componentsSeparatedByString:@","];
   cell.nameLabel.text = job.employer;
   cell.dateLabel.text = job.jobTitle;
-
   return cell;
 }
 
@@ -61,9 +55,11 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-  TabBarDataHandler *tbdh = [[TabBarDataHandler alloc]init];
-  tbdh.selectedJob = [self.dao.arrayOfJobs objectAtIndex:indexPath.row];
+  if ([segue.identifier isEqualToString:@"showTabBar"]) {
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    TabBarDataHandler *tbdh = [[TabBarDataHandler alloc]init];
+    tbdh.selectedJob = [self.dao.arrayOfJobs objectAtIndex:indexPath.row];
+  }
 }
 
 //- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

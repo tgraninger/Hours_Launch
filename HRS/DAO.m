@@ -37,7 +37,7 @@
   //  self.context.undoManager
   [self.context setPersistentStoreCoordinator:psc];
   self.arrayOfJobs = [NSMutableArray array];
-  [self hardcodeValues];
+  self.managedJobs = [NSMutableArray array];
   [self fetchDataFromContext];
   
   return self;
@@ -48,6 +48,7 @@
   NSString *documentDirectory = [documentDirectories objectAtIndex:0];
   return [documentDirectory stringByAppendingString:@"store.data"];
 }
+
 
 - (void)fetchDataFromContext{
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
@@ -64,18 +65,19 @@
     abort();
   }
 //  Handle result...
+  [self createObjectFromMO:result];
 }
 
-- (void)createObjectForJobInContext:(NSArray *)jobs {
+- (void)createObjectFromMO:(NSArray *)jobs {
   for (Job *job in jobs) {
-    JobObject *jobToAdd = [[JobObject alloc]init];
-    jobToAdd.employer = job.employer;
-    jobToAdd.jobTitle = job.jobTitle;
-    jobToAdd.wage = job.hourlyWage;
-    jobToAdd.otWage = job.overtimeWage;;
-    jobToAdd.shifts = [NSMutableArray arrayWithArray:[job.shifts allObjects]];
-    NSLog(@"%@",jobToAdd.employer);
-    [self.arrayOfJobs addObject:jobToAdd];
+    JobObject *jobObject = [[JobObject alloc]init];
+    jobObject.employer = job.employer;
+    jobObject.jobTitle = job.jobTitle;
+    jobObject.wage = job.hourlyWage;
+    jobObject.otWage = job.overtimeWage;;
+    jobObject.shifts = [NSMutableArray arrayWithArray:[job.shifts allObjects]];
+    NSLog(@"%@",jobObject.employer);
+    [self.arrayOfJobs addObject:jobObject];
   }
 }
 
@@ -85,46 +87,54 @@
   [self addJob:@"TurnToTech" title:@"Developer" wageRate:wr otWage:ot];
 }
 
+
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage {
   Job *newJob = [NSEntityDescription insertNewObjectForEntityForName:@"Job" inManagedObjectContext:self.context];
   [newJob setEmployer:employer];
   [newJob setJobTitle:jobTitle];
   [newJob setHourlyWage:wage];
   [newJob setOvertimeWage:otWage];
-  NSArray *array = [NSArray arrayWithObject:newJob];
-  [self createObjectForJobInContext:array];
+  [self createNewJobObjectFromMO:newJob];
   [self saveChanges];
 }
 
-- (void)addNewShift:(NSString *)name start:(NSDate *)start end:(NSDate *)end {
+- (void)createNewJobObjectFromMO:(Job *)job {
+  JobObject *newJob = [[JobObject alloc]init];
+  newJob.employer = job.employer;
+  newJob.jobTitle = job.jobTitle;
+  newJob.wage = job.hourlyWage;
+  newJob.otWage = job.overtimeWage;
+  [self.arrayOfJobs addObject:newJob];
+}
+
+- (void)addNewShiftForJob:(JobObject *)job startTime:(NSDate *)start endTime:(NSDate *)end {
+  NSUInteger index = [self.arrayOfJobs indexOfObject:job];
+  Job *jobToAddShift = [self.managedJobs objectAtIndex:index];
   Shift *shift = [NSEntityDescription insertNewObjectForEntityForName:@"Shift" inManagedObjectContext:self.context];
   [shift setStartTime:start];
   [shift setEndTime:end];
+  [jobToAddShift addShiftsObject:shift];
   [self saveChanges];
+  [self createShiftObjectForJob:job fromMO:shift];
 }
 
-//  Invoke this method in shift details view to display dates and times for shift...
-- (NSMutableDictionary *)parseDatesForShift:(Shift *)selectedShift {
-  NSMutableDictionary *parsedData = [[NSMutableDictionary alloc]init];
-  NSArray *array;
-  NSNumber *hours = [self hoursBetween:selectedShift.startTime and:selectedShift.endTime];
+- (void)createShiftObjectForJob:(JobObject *)job fromMO:(Shift *)shiftMO {
+  NSNumber *hours = [self hoursBetween:shiftMO.startTime and:shiftMO.endTime];
   NSString *date;
-  NSString *start = [self formatDateToString:selectedShift.startTime];
-  NSString *end = [self formatDateToString:selectedShift.endTime];
-  
-  array = [start componentsSeparatedByString:@" "];
+  NSString *start = [self formatDateToString:shiftMO.startTime];
+  NSString *end = [self formatDateToString:shiftMO.endTime];
+  NSArray *array = [start componentsSeparatedByString:@" "];
   date = [array firstObject];
   start = [array lastObject];
   array = nil;
   array = [end componentsSeparatedByString:@" "];
   end = [array lastObject];
-
-  [parsedData setObject:date forKey:@"date"];
-  [parsedData setObject:start forKey:@"start"];
-  [parsedData setObject:end forKey:@"end"];
-  [parsedData setObject:hours forKey:@"hours"];
-
-  return parsedData;
+  ShiftObject *shift = [[ShiftObject alloc]init];
+  shift.date = date;
+  shift.hours = hours;
+  shift.startTime = start;
+  shift.endTime = end;
+  [job.shifts addObject:shift];
 }
 
 - (NSString *)formatDateToString:(NSDate *)date {
@@ -132,6 +142,13 @@
   [formatter setDateFormat:@"MM-dd-yyyy HH:mm"];
   NSString *stringFromDate = [formatter stringFromDate:date];
   return stringFromDate;
+}
+
+- (NSNumber *)createNumberFromString:(NSString *)string {
+  NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+  nf.numberStyle = NSNumberFormatterDecimalStyle;
+  NSNumber *wage = [nf numberFromString:string];
+  return wage;
 }
 
 

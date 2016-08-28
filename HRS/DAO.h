@@ -15,16 +15,17 @@
 
 @interface DAO : NSObject
 
+@property (nonatomic, retain) NSMutableArray *managedJobs;
 @property (nonatomic, retain) NSMutableArray *arrayOfJobs;
 @property (nonatomic, retain) NSManagedObjectModel *model;
 @property (nonatomic, retain) NSManagedObjectContext *context;
 
 + (instancetype) sharedInstance;
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage;
-- (void)addNewShift:(NSString *)name start:(NSString *)start end:(NSString *)end;
-- (NSMutableDictionary *)parseDatesForShift:(Shift *)selectedShift;
+- (void)addNewShiftForJob:(JobObject *)job startTime:(NSDate *)start endTime:(NSDate *)end;
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
 - (NSString *)formatDateToString:(NSDate *)date;
+- (NSNumber *)createNumberFromString:(NSString *)string;
 
 //- (void)markAsPaid:(Events *)event;
 

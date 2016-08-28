@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BA691ADE1D70A6250090F872 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA691ADD1D70A6250090F872 /* CoreData.framework */; };
 		BA691AE11D70A7AB0090F872 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA691ADF1D70A7AB0090F872 /* Model.xcdatamodeld */; };
-		CE2529F51D3D45B2007384BE /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2529F41D3D45B2007384BE /* Events.m */; };
 		CE2529FE1D3D61F6007384BE /* ShiftDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2529FD1D3D61F6007384BE /* ShiftDetailsViewController.m */; };
 		CE5068AD1D36C578003C1B95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068AC1D36C578003C1B95 /* main.m */; };
 		CE5068B01D36C578003C1B95 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068AF1D36C578003C1B95 /* AppDelegate.m */; };
@@ -20,6 +19,7 @@
 		CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068C91D36CDC5003C1B95 /* DAO.m */; };
 		CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */; };
 		CE5068F61D36EE80003C1B95 /* AddNewShiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */; };
+		CE9253711D7259C2003BA97C /* AddJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9253701D7259C2003BA97C /* AddJobViewController.m */; };
 		CE9FF4FC1D70E36D007536A2 /* JobObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF4FB1D70E36D007536A2 /* JobObject.m */; };
 		CE9FF4FF1D70E379007536A2 /* ShiftObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF4FE1D70E379007536A2 /* ShiftObject.m */; };
 		CE9FF5081D70E711007536A2 /* Job+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5011D70E711007536A2 /* Job+CoreDataProperties.m */; };
@@ -33,8 +33,6 @@
 /* Begin PBXFileReference section */
 		BA691ADD1D70A6250090F872 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BA691AE01D70A7AB0090F872 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		CE2529F31D3D45B2007384BE /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		CE2529F41D3D45B2007384BE /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
 		CE2529F61D3D4C88007384BE /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		CE2529FA1D3D594A007384BE /* StoredEvents.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoredEvents.db; sourceTree = "<group>"; };
 		CE2529FC1D3D61F6007384BE /* ShiftDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftDetailsViewController.h; sourceTree = "<group>"; };
@@ -55,6 +53,8 @@
 		CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		CE5068F41D36EE80003C1B95 /* AddNewShiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewShiftViewController.h; sourceTree = "<group>"; };
 		CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewShiftViewController.m; sourceTree = "<group>"; };
+		CE92536F1D7259C2003BA97C /* AddJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddJobViewController.h; sourceTree = "<group>"; };
+		CE9253701D7259C2003BA97C /* AddJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddJobViewController.m; sourceTree = "<group>"; };
 		CE9FF4FA1D70E36D007536A2 /* JobObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobObject.h; sourceTree = "<group>"; };
 		CE9FF4FB1D70E36D007536A2 /* JobObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobObject.m; sourceTree = "<group>"; };
 		CE9FF4FD1D70E379007536A2 /* ShiftObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftObject.h; sourceTree = "<group>"; };
@@ -105,10 +105,10 @@
 		CE5068AA1D36C578003C1B95 /* HRS */ = {
 			isa = PBXGroup;
 			children = (
-				CE5068C41D36CD89003C1B95 /* CustomClasses */,
-				CE5068F01D36E50F003C1B95 /* CoreData */,
+				CE5068C41D36CD89003C1B95 /* Custom Object Classes */,
+				CE5068F01D36E50F003C1B95 /* Core Data Classes */,
 				CE5068C31D36CD83003C1B95 /* Data Classes */,
-				CE5068C21D36CD7D003C1B95 /* ViewControllers */,
+				CE5068C21D36CD7D003C1B95 /* View Controllers */,
 				CE5068EF1D36E36C003C1B95 /* App Delegate */,
 				CE5068B41D36C578003C1B95 /* Main.storyboard */,
 				CE5068B71D36C578003C1B95 /* Assets.xcassets */,
@@ -129,11 +129,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CE5068C21D36CD7D003C1B95 /* ViewControllers */ = {
+		CE5068C21D36CD7D003C1B95 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				CE5068B11D36C578003C1B95 /* JobsViewController.h */,
 				CE5068B21D36C578003C1B95 /* JobsViewController.m */,
+				CE92536F1D7259C2003BA97C /* AddJobViewController.h */,
+				CE9253701D7259C2003BA97C /* AddJobViewController.m */,
 				CE2529FC1D3D61F6007384BE /* ShiftDetailsViewController.h */,
 				CE2529FD1D3D61F6007384BE /* ShiftDetailsViewController.m */,
 				CE5068F41D36EE80003C1B95 /* AddNewShiftViewController.h */,
@@ -141,7 +143,7 @@
 				CE9FF50C1D70E8AB007536A2 /* ShiftTableViewController.h */,
 				CE9FF50D1D70E8AB007536A2 /* ShiftTableViewController.m */,
 			);
-			name = ViewControllers;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		CE5068C31D36CD83003C1B95 /* Data Classes */ = {
@@ -149,15 +151,13 @@
 			children = (
 				CE5068C81D36CDC5003C1B95 /* DAO.h */,
 				CE5068C91D36CDC5003C1B95 /* DAO.m */,
-				CE2529F31D3D45B2007384BE /* Events.h */,
-				CE2529F41D3D45B2007384BE /* Events.m */,
 				CE9FF50F1D70F4A3007536A2 /* TabBarDataHandler.h */,
 				CE9FF5101D70F4A3007536A2 /* TabBarDataHandler.m */,
 			);
 			name = "Data Classes";
 			sourceTree = "<group>";
 		};
-		CE5068C41D36CD89003C1B95 /* CustomClasses */ = {
+		CE5068C41D36CD89003C1B95 /* Custom Object Classes */ = {
 			isa = PBXGroup;
 			children = (
 				CE5068F11D36E533003C1B95 /* CustomTableViewCell.h */,
@@ -167,7 +167,7 @@
 				CE9FF4FD1D70E379007536A2 /* ShiftObject.h */,
 				CE9FF4FE1D70E379007536A2 /* ShiftObject.m */,
 			);
-			name = CustomClasses;
+			name = "Custom Object Classes";
 			sourceTree = "<group>";
 		};
 		CE5068EF1D36E36C003C1B95 /* App Delegate */ = {
@@ -179,7 +179,7 @@
 			name = "App Delegate";
 			sourceTree = "<group>";
 		};
-		CE5068F01D36E50F003C1B95 /* CoreData */ = {
+		CE5068F01D36E50F003C1B95 /* Core Data Classes */ = {
 			isa = PBXGroup;
 			children = (
 				BA691ADF1D70A7AB0090F872 /* Model.xcdatamodeld */,
@@ -192,7 +192,7 @@
 				CE9FF5061D70E711007536A2 /* Shift.h */,
 				CE9FF5071D70E711007536A2 /* Shift.m */,
 			);
-			name = CoreData;
+			name = "Core Data Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,7 +269,6 @@
 				CE9FF50E1D70E8AB007536A2 /* ShiftTableViewController.m in Sources */,
 				CE9FF50B1D70E711007536A2 /* Shift.m in Sources */,
 				CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */,
-				CE2529F51D3D45B2007384BE /* Events.m in Sources */,
 				CE5068B31D36C578003C1B95 /* JobsViewController.m in Sources */,
 				CE9FF5081D70E711007536A2 /* Job+CoreDataProperties.m in Sources */,
 				CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */,
@@ -277,6 +276,7 @@
 				BA691AE11D70A7AB0090F872 /* Model.xcdatamodeld in Sources */,
 				CE5068AD1D36C578003C1B95 /* main.m in Sources */,
 				CE9FF4FC1D70E36D007536A2 /* JobObject.m in Sources */,
+				CE9253711D7259C2003BA97C /* AddJobViewController.m in Sources */,
 				CE2529FE1D3D61F6007384BE /* ShiftDetailsViewController.m in Sources */,
 				CE9FF4FF1D70E379007536A2 /* ShiftObject.m in Sources */,
 				CE9FF5111D70F4A3007536A2 /* TabBarDataHandler.m in Sources */,
