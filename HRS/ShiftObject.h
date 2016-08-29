@@ -10,6 +10,7 @@
 
 @interface ShiftObject : NSObject
 
+@property (nonatomic, retain) NSDate *dateAndStart;
 @property (nonatomic, retain) NSString *date;
 @property (nonatomic, retain) NSString *startTime;
 @property (nonatomic, retain) NSString *endTime;

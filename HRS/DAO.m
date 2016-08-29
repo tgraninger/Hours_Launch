@@ -74,11 +74,35 @@
     jobObject.employer = job.employer;
     jobObject.jobTitle = job.jobTitle;
     jobObject.wage = job.hourlyWage;
-    jobObject.otWage = job.overtimeWage;;
+    jobObject.otWage = job.overtimeWage;
     jobObject.shifts = [NSMutableArray arrayWithArray:[job.shifts allObjects]];
-    NSLog(@"%@",jobObject.employer);
+    [self checkForIncompleteShifts:jobObject];
     [self.arrayOfJobs addObject:jobObject];
   }
+}
+
+- (NSMutableArray * )checkForIncompleteShifts:(JobObject *)job {
+  NSMutableArray *jobsWithIncompleteShifts = [NSMutableArray array];
+  job.incompleteShifts = [NSMutableArray array];
+  for (ShiftObject *shift in job.shifts) {
+    if (!shift.endTime) {
+      [job.incompleteShifts addObject:shift];
+    }
+  }
+  if (job.incompleteShifts.count > 0) {
+    [jobsWithIncompleteShifts addObject:job];
+    job.incompleteShifts = [self sortByDate:job.incompleteShifts];
+  } else {
+    job.incompleteShifts = nil;
+  }
+  return jobsWithIncompleteShifts;
+}
+
+- (NSMutableArray *)sortByDate:(NSMutableArray *)incompleteShifts {
+  NSMutableArray *sortedArray = [NSMutableArray array];
+  NSSortDescriptor *sd = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:NO];
+  sortedArray = (NSMutableArray *)[incompleteShifts sortedArrayUsingDescriptors:[NSArray arrayWithObject:sd]];
+  return sortedArray;
 }
 
 - (void)hardcodeValues {
@@ -86,7 +110,6 @@
   NSNumber *ot = [NSNumber numberWithInt:45];
   [self addJob:@"TurnToTech" title:@"Developer" wageRate:wr otWage:ot];
 }
-
 
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage {
   Job *newJob = [NSEntityDescription insertNewObjectForEntityForName:@"Job" inManagedObjectContext:self.context];
@@ -107,35 +130,52 @@
   [self.arrayOfJobs addObject:newJob];
 }
 
-- (void)addNewShiftForJob:(JobObject *)job startTime:(NSDate *)start endTime:(NSDate *)end {
+- (void)addNewShiftForJob:(JobObject *)job {
   NSUInteger index = [self.arrayOfJobs indexOfObject:job];
   Job *jobToAddShift = [self.managedJobs objectAtIndex:index];
   Shift *shift = [NSEntityDescription insertNewObjectForEntityForName:@"Shift" inManagedObjectContext:self.context];
-  [shift setStartTime:start];
-  [shift setEndTime:end];
+  [shift setStartTime:[[self getCurrentDate]objectAtIndex:0]];
   [jobToAddShift addShiftsObject:shift];
   [self saveChanges];
   [self createShiftObjectForJob:job fromMO:shift];
 }
 
 - (void)createShiftObjectForJob:(JobObject *)job fromMO:(Shift *)shiftMO {
+  // Parse dates and calculate hours
   NSNumber *hours = [self hoursBetween:shiftMO.startTime and:shiftMO.endTime];
-  NSString *date;
   NSString *start = [self formatDateToString:shiftMO.startTime];
-  NSString *end = [self formatDateToString:shiftMO.endTime];
+//  NSString *end = [self formatDateToString:shiftMO.endTime];
   NSArray *array = [start componentsSeparatedByString:@" "];
-  date = [array firstObject];
+  NSString *date = [array firstObject];
   start = [array lastObject];
   array = nil;
-  array = [end componentsSeparatedByString:@" "];
-  end = [array lastObject];
+//  array = [end componentsSeparatedByString:@" "];
+//  end = [array lastObject];
+  
   ShiftObject *shift = [[ShiftObject alloc]init];
+  shift.dateAndStart = shiftMO.startTime;
   shift.date = date;
   shift.hours = hours;
   shift.startTime = start;
-  shift.endTime = end;
+//  shift.endTime = end;
   [job.shifts addObject:shift];
 }
+
+// invoke in addNewShiftVC if currentTimeButton selected to store currentTime as outTime...
+- (void)recordCurrentTimeForClockOutForShift:(ShiftObject *)shift forJob:(JobObject *)job {
+  NSArray *times = [self getCurrentDate];
+  shift.endTime = [times objectAtIndex:1];
+  NSUInteger index = [self.arrayOfJobs indexOfObject:job];
+  Job *jobWithShiftToUpdate = [self.managedJobs objectAtIndex:index];
+  NSArray *managedShifts = [NSArray arrayWithArray:[jobWithShiftToUpdate.shifts allObjects]];
+  for (Shift *managedShift in managedShifts) {
+    if (managedShift.startTime == shift.dateAndStart) {
+      [managedShift setEndTime:[times objectAtIndex:0]];
+    }
+  }
+}
+
+//  Method to set time from date picker...
 
 - (NSString *)formatDateToString:(NSDate *)date {
   NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -151,7 +191,6 @@
   return wage;
 }
 
-
 - (void)saveChanges {
   NSError *err = nil;
   BOOL successful = [[self context] save:&err];
@@ -161,16 +200,21 @@
   NSLog(@"Data Saved");
 }
 
-- (void)sortByDate {
-//  sort stored events by date - ascending.
-}
-
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate {
   NSTimeInterval distanceBetweenDates = [secondDate timeIntervalSinceDate:firstDate];
   double secInHr = 3600;
   double hrs = distanceBetweenDates / secInHr;
   NSNumber *hours = [NSNumber numberWithDouble:hrs];
   return hours;
+}
+
+- (NSArray *)getCurrentDate {
+  NSDate *today = [NSDate date];
+  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+  [dateFormat setDateFormat:@"dd/MM/yyyy"];
+  NSString *dateString = [dateFormat stringFromDate:today];
+  NSLog(@"date: %@", dateString);
+  return @[today, dateString];
 }
 
 

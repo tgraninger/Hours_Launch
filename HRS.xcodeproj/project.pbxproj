@@ -105,8 +105,8 @@
 		CE5068AA1D36C578003C1B95 /* HRS */ = {
 			isa = PBXGroup;
 			children = (
-				CE5068C41D36CD89003C1B95 /* Custom Object Classes */,
 				CE5068F01D36E50F003C1B95 /* Core Data Classes */,
+				CE5068C41D36CD89003C1B95 /* Custom Object Classes */,
 				CE5068C31D36CD83003C1B95 /* Data Classes */,
 				CE5068C21D36CD7D003C1B95 /* View Controllers */,
 				CE5068EF1D36E36C003C1B95 /* App Delegate */,

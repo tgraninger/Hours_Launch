@@ -22,11 +22,10 @@
 
 + (instancetype) sharedInstance;
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage;
-- (void)addNewShiftForJob:(JobObject *)job startTime:(NSDate *)start endTime:(NSDate *)end;
+- (void)addNewShiftForJob:(JobObject *)job;
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
 - (NSString *)formatDateToString:(NSDate *)date;
 - (NSNumber *)createNumberFromString:(NSString *)string;
-
-//- (void)markAsPaid:(Events *)event;
+- (void)recordCurrentTimeForClockOutForShift:(ShiftObject *)shift forJob:(JobObject *)job;
 
 @end

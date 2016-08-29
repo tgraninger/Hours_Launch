@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DAO.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

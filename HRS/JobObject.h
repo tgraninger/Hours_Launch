@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSNumber *wage;
 @property (nonatomic, retain) NSNumber *otWage;
 @property (nonatomic, retain) NSMutableArray *shifts;
+@property (nonatomic, retain) NSMutableArray *incompleteShifts;
 
 @end

@@ -12,13 +12,10 @@
 
 @interface AddNewShiftViewController : UIViewController <UITextFieldDelegate>
 
-@property BOOL edit;
-@property (nonatomic, retain) ShiftObject *shift;
+@property (nonatomic, retain) JobObject *currentJob;
+@property (nonatomic, retain) ShiftObject *currentShift;
 @property (weak, nonatomic) IBOutlet UILabel *startLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endLabel;
 @property (weak, nonatomic) IBOutlet UIButton *clockInOutButton;
-
-//- (void)showPicker;
-//- (void)closePicker;
 
 @end
