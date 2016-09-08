@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ShiftDetailsViewController.h"
-#import "TabBarDataHandler.h"
-#import "ShiftObject.h"
+#import "Shift.h"
 
 @interface ShiftTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface JobsViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
+@interface JobsViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
 
 @end

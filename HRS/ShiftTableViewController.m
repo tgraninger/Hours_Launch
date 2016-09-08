@@ -7,10 +7,11 @@
 //
 
 #import "ShiftTableViewController.h"
+#import "NSDate+NSDate_StringMethods.h"
 
 @interface ShiftTableViewController ()
 
-@property (nonatomic, retain) TabBarDataHandler *handler;
+@property (nonatomic, retain) DAO *dao;
 
 @end
 
@@ -18,15 +19,9 @@
 
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-
+  [super viewDidLoad];
+  self.dao = [DAO sharedInstance];
+//  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"sdCell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,25 +32,34 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [self.dao.managedJobs count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+  NSString *str = [NSString stringWithFormat:@"%@: %@", [[self.dao.managedJobs objectAtIndex:section]employer], [[self.dao.managedJobs objectAtIndex:section]jobTitle]];
+  return str;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 1;
-//    return [self.handler.selectedJob.shifts count];
+  NSInteger shiftCount = [[[[self.dao.managedJobs objectAtIndex:section]shifts]allObjects]count];
+  return shiftCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sdCell" forIndexPath:indexPath];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"sdCell"];
   }
-  
-  cell.textLabel.text = @"Hello, world!";
-//  ShiftObject *shift = [self.handler.selectedJob.shifts objectAtIndex:indexPath.row];
-//  cell.textLabel.text = [[DAO sharedInstance]formatDateToString:shift.date];
-//  cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", shift.hours];
-  
+  Job *job = [self.dao.managedJobs objectAtIndex:indexPath.section];
+  NSMutableArray *shifts = [self.dao sortByDate:[NSMutableArray arrayWithArray:[job.shifts allObjects]]];
+  Shift *aShift = [shifts objectAtIndex:indexPath.row];
+  UIFont *cellFont = [UIFont systemFontOfSize:14.0];
+  cell.textLabel.font = cellFont;
+  cell.textLabel.text = [NSString stringWithFormat:@"Shift date: %@",[aShift.startTime getStartDate:aShift.startTime]];
+  cell.detailTextLabel.text = [NSString stringWithFormat:@"Hours worked: %.2f", [[self.dao hoursBetween:aShift.startTime and:aShift.endTime]floatValue]];
+  if (!aShift.endTime) {
+    cell.backgroundColor = [UIColor redColor];
+  }
   return cell;
 }
 
@@ -64,10 +68,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  NSIndexPath *index = [self.tableView indexPathForSelectedRow];
-  ShiftDetailsViewController *sdvc = [[ShiftDetailsViewController alloc]init];
-  sdvc.selectedJob = self.handler.selectedJob;
-  sdvc.selectedShift = [self.handler.selectedJob.shifts objectAtIndex:index.row];
+//  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//  NSInteger sec = [self.tableView indexPath];
+//  ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[segue destinationViewController];
+//  sdvc.selectedShift = [self.shifts objectAtIndex:index.row];
 }
 
 

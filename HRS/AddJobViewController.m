@@ -18,6 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  if (self.isEditingJob) {
+    [self.employerField setText:self.jobToEdit.employer];
+    [self.jobTitleField setText:self.jobToEdit.jobTitle];
+    [self.wageField setText:[NSString stringWithFormat:@"%@", self.jobToEdit.hourlyWage]];
+  }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,31 +32,12 @@
 
 - (IBAction)saveButtonPressed:(id)sender {
   NSNumber *wage = [[DAO sharedInstance]createNumberFromString:self.wageField.text];
-  NSNumber *otWage = [self calculateOvertimePay:wage];
-  [[DAO sharedInstance]addJob:self.employerField.text title:self.jobTitleField.text wageRate:wage otWage:otWage];
+  if (self.isEditingJob) {
+    [[DAO sharedInstance]editExistingJob:self.jobToEdit employer:self.employerField.text jobTitle:self.jobTitleField.text wage:wage];
+  } else {
+    [[DAO sharedInstance]addJob:self.employerField.text title:self.jobTitleField.text wage:wage];
+  }
   [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (NSNumber *)calculateOvertimePay:(NSNumber *)wage {
-  NSNumber *otWage;
-  if (self.otSegCtrl.selectedSegmentIndex == 0) {
-    otWage = wage;
-  } else if (self.otSegCtrl.selectedSegmentIndex == 1) {
-    otWage = [NSNumber numberWithInt:[wage intValue] * 1.5];
-  } else if (self.otSegCtrl.selectedSegmentIndex == 2) {
-    otWage = [NSNumber numberWithInt:[wage intValue] * 2];
-  }
-  return otWage;
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

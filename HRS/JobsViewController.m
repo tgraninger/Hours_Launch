@@ -8,15 +8,14 @@
 
 #import "JobsViewController.h"
 #import "DAO.h"
-#import "CustomTableViewCell.h"
+#import "AddJobViewController.h"
 #import "ShiftDetailsViewController.h"
 #import "AddNewShiftViewController.h"
-#import "TabBarDataHandler.h"
+#import "NSDate+NSDate_StringMethods.h"
 
 @interface JobsViewController ()
 
 @property (nonatomic, retain) DAO *dao;
-@property (nonatomic, retain) NSIndexPath *objectIndex;
 
 @end
 
@@ -29,36 +28,54 @@
   [super viewDidLoad];
   self.dao = [DAO sharedInstance];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.tableView reloadData];
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return self.dao.arrayOfJobs.count;
+  return self.dao.managedJobs.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  NSString *str = @"Select a job to edit details.";
+  return str;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-  JobObject *job = [self.dao.arrayOfJobs objectAtIndex:indexPath.row];
-  cell.nameLabel.text = job.employer;
-  cell.dateLabel.text = job.jobTitle;
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  Job *job = [self.dao.managedJobs objectAtIndex:indexPath.row];
+  cell.textLabel.text = job.employer;
+  cell.detailTextLabel.text = job.jobTitle;
+  cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [self performSegueWithIdentifier:@"showTabBar" sender:self];
+  [self performSegueWithIdentifier:@"editJobDetails" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.identifier isEqualToString:@"showTabBar"]) {
+  AddJobViewController *vc = (AddJobViewController *)[segue destinationViewController];
+  if ([segue.identifier isEqualToString:@"editJobDetails"]) {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    TabBarDataHandler *tbdh = [[TabBarDataHandler alloc]init];
-    tbdh.selectedJob = [self.dao.arrayOfJobs objectAtIndex:indexPath.row];
+    vc.jobToEdit = [self.dao.managedJobs objectAtIndex:indexPath.row];
+    vc.isEditingJob = YES;
+  } else if ([segue.identifier isEqualToString:@"addNewJob"]){
+    vc.isEditingJob = NO;
   }
 }
 

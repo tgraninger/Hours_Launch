@@ -17,17 +17,14 @@
 		CE5068B81D36C578003C1B95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE5068B71D36C578003C1B95 /* Assets.xcassets */; };
 		CE5068BB1D36C578003C1B95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE5068B91D36C578003C1B95 /* LaunchScreen.storyboard */; };
 		CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068C91D36CDC5003C1B95 /* DAO.m */; };
-		CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */; };
 		CE5068F61D36EE80003C1B95 /* AddNewShiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */; };
 		CE9253711D7259C2003BA97C /* AddJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9253701D7259C2003BA97C /* AddJobViewController.m */; };
-		CE9FF4FC1D70E36D007536A2 /* JobObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF4FB1D70E36D007536A2 /* JobObject.m */; };
-		CE9FF4FF1D70E379007536A2 /* ShiftObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF4FE1D70E379007536A2 /* ShiftObject.m */; };
 		CE9FF5081D70E711007536A2 /* Job+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5011D70E711007536A2 /* Job+CoreDataProperties.m */; };
 		CE9FF5091D70E711007536A2 /* Job.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5031D70E711007536A2 /* Job.m */; };
 		CE9FF50A1D70E711007536A2 /* Shift+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5051D70E711007536A2 /* Shift+CoreDataProperties.m */; };
 		CE9FF50B1D70E711007536A2 /* Shift.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5071D70E711007536A2 /* Shift.m */; };
 		CE9FF50E1D70E8AB007536A2 /* ShiftTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF50D1D70E8AB007536A2 /* ShiftTableViewController.m */; };
-		CE9FF5111D70F4A3007536A2 /* TabBarDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5101D70F4A3007536A2 /* TabBarDataHandler.m */; };
+		CEECA4941D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = CEECA4931D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,16 +46,10 @@
 		CE5068BC1D36C578003C1B95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE5068C81D36CDC5003C1B95 /* DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAO.h; sourceTree = "<group>"; };
 		CE5068C91D36CDC5003C1B95 /* DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAO.m; sourceTree = "<group>"; };
-		CE5068F11D36E533003C1B95 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
-		CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		CE5068F41D36EE80003C1B95 /* AddNewShiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewShiftViewController.h; sourceTree = "<group>"; };
 		CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewShiftViewController.m; sourceTree = "<group>"; };
 		CE92536F1D7259C2003BA97C /* AddJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddJobViewController.h; sourceTree = "<group>"; };
 		CE9253701D7259C2003BA97C /* AddJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddJobViewController.m; sourceTree = "<group>"; };
-		CE9FF4FA1D70E36D007536A2 /* JobObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobObject.h; sourceTree = "<group>"; };
-		CE9FF4FB1D70E36D007536A2 /* JobObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobObject.m; sourceTree = "<group>"; };
-		CE9FF4FD1D70E379007536A2 /* ShiftObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftObject.h; sourceTree = "<group>"; };
-		CE9FF4FE1D70E379007536A2 /* ShiftObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftObject.m; sourceTree = "<group>"; };
 		CE9FF5001D70E711007536A2 /* Job+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Job+CoreDataProperties.h"; path = "../Job+CoreDataProperties.h"; sourceTree = "<group>"; };
 		CE9FF5011D70E711007536A2 /* Job+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Job+CoreDataProperties.m"; path = "../Job+CoreDataProperties.m"; sourceTree = "<group>"; };
 		CE9FF5021D70E711007536A2 /* Job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Job.h; path = ../Job.h; sourceTree = "<group>"; };
@@ -69,8 +60,8 @@
 		CE9FF5071D70E711007536A2 /* Shift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shift.m; path = ../Shift.m; sourceTree = "<group>"; };
 		CE9FF50C1D70E8AB007536A2 /* ShiftTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftTableViewController.h; sourceTree = "<group>"; };
 		CE9FF50D1D70E8AB007536A2 /* ShiftTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftTableViewController.m; sourceTree = "<group>"; };
-		CE9FF50F1D70F4A3007536A2 /* TabBarDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarDataHandler.h; sourceTree = "<group>"; };
-		CE9FF5101D70F4A3007536A2 /* TabBarDataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarDataHandler.m; sourceTree = "<group>"; };
+		CEECA4921D7790EF00A0E13A /* NSDate+NSDate_StringMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NSDate_StringMethods.h"; sourceTree = "<group>"; };
+		CEECA4931D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NSDate_StringMethods.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,16 +123,16 @@
 		CE5068C21D36CD7D003C1B95 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE5068F41D36EE80003C1B95 /* AddNewShiftViewController.h */,
+				CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */,
 				CE5068B11D36C578003C1B95 /* JobsViewController.h */,
 				CE5068B21D36C578003C1B95 /* JobsViewController.m */,
 				CE92536F1D7259C2003BA97C /* AddJobViewController.h */,
 				CE9253701D7259C2003BA97C /* AddJobViewController.m */,
-				CE2529FC1D3D61F6007384BE /* ShiftDetailsViewController.h */,
-				CE2529FD1D3D61F6007384BE /* ShiftDetailsViewController.m */,
-				CE5068F41D36EE80003C1B95 /* AddNewShiftViewController.h */,
-				CE5068F51D36EE80003C1B95 /* AddNewShiftViewController.m */,
 				CE9FF50C1D70E8AB007536A2 /* ShiftTableViewController.h */,
 				CE9FF50D1D70E8AB007536A2 /* ShiftTableViewController.m */,
+				CE2529FC1D3D61F6007384BE /* ShiftDetailsViewController.h */,
+				CE2529FD1D3D61F6007384BE /* ShiftDetailsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -151,8 +142,8 @@
 			children = (
 				CE5068C81D36CDC5003C1B95 /* DAO.h */,
 				CE5068C91D36CDC5003C1B95 /* DAO.m */,
-				CE9FF50F1D70F4A3007536A2 /* TabBarDataHandler.h */,
-				CE9FF5101D70F4A3007536A2 /* TabBarDataHandler.m */,
+				CEECA4921D7790EF00A0E13A /* NSDate+NSDate_StringMethods.h */,
+				CEECA4931D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m */,
 			);
 			name = "Data Classes";
 			sourceTree = "<group>";
@@ -160,12 +151,6 @@
 		CE5068C41D36CD89003C1B95 /* Custom Object Classes */ = {
 			isa = PBXGroup;
 			children = (
-				CE5068F11D36E533003C1B95 /* CustomTableViewCell.h */,
-				CE5068F21D36E533003C1B95 /* CustomTableViewCell.m */,
-				CE9FF4FA1D70E36D007536A2 /* JobObject.h */,
-				CE9FF4FB1D70E36D007536A2 /* JobObject.m */,
-				CE9FF4FD1D70E379007536A2 /* ShiftObject.h */,
-				CE9FF4FE1D70E379007536A2 /* ShiftObject.m */,
 			);
 			name = "Custom Object Classes";
 			sourceTree = "<group>";
@@ -267,19 +252,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE9FF50E1D70E8AB007536A2 /* ShiftTableViewController.m in Sources */,
+				CEECA4941D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m in Sources */,
 				CE9FF50B1D70E711007536A2 /* Shift.m in Sources */,
 				CE5068CA1D36CDC5003C1B95 /* DAO.m in Sources */,
 				CE5068B31D36C578003C1B95 /* JobsViewController.m in Sources */,
 				CE9FF5081D70E711007536A2 /* Job+CoreDataProperties.m in Sources */,
-				CE5068F31D36E533003C1B95 /* CustomTableViewCell.m in Sources */,
 				CE5068B01D36C578003C1B95 /* AppDelegate.m in Sources */,
 				BA691AE11D70A7AB0090F872 /* Model.xcdatamodeld in Sources */,
 				CE5068AD1D36C578003C1B95 /* main.m in Sources */,
-				CE9FF4FC1D70E36D007536A2 /* JobObject.m in Sources */,
 				CE9253711D7259C2003BA97C /* AddJobViewController.m in Sources */,
 				CE2529FE1D3D61F6007384BE /* ShiftDetailsViewController.m in Sources */,
-				CE9FF4FF1D70E379007536A2 /* ShiftObject.m in Sources */,
-				CE9FF5111D70F4A3007536A2 /* TabBarDataHandler.m in Sources */,
 				CE9FF50A1D70E711007536A2 /* Shift+CoreDataProperties.m in Sources */,
 				CE5068F61D36EE80003C1B95 /* AddNewShiftViewController.m in Sources */,
 				CE9FF5091D70E711007536A2 /* Job.m in Sources */,

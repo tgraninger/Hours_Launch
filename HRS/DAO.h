@@ -10,22 +10,25 @@
 #import <CoreData/CoreData.h>
 #import "Job.h"
 #import "Shift.h"
-#import "JobObject.h"
-#import "ShiftObject.h"
 
 @interface DAO : NSObject
 
 @property (nonatomic, retain) NSMutableArray *managedJobs;
-@property (nonatomic, retain) NSMutableArray *arrayOfJobs;
 @property (nonatomic, retain) NSManagedObjectModel *model;
 @property (nonatomic, retain) NSManagedObjectContext *context;
+@property (nonatomic, retain) NSMutableArray *incompleteShifts;
+@property BOOL hasIncompleteShifts;
 
 + (instancetype) sharedInstance;
-- (void)addJob:(NSString *)employer title:(NSString *)jobTitle wageRate:(NSNumber *)wage otWage:(NSNumber *)otWage;
-- (void)addNewShiftForJob:(JobObject *)job;
-- (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
-- (NSString *)formatDateToString:(NSDate *)date;
+- (void)addJob:(NSString *)employer title:(NSString *)jobTitle wage:(NSNumber *)wage;
+- (void)editExistingJob:(Job *)job employer:(NSString *)emp jobTitle:(NSString *)jt wage:(NSNumber *)wage;
+- (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)currentDate;
 - (NSNumber *)createNumberFromString:(NSString *)string;
-- (void)recordCurrentTimeForClockOutForShift:(ShiftObject *)shift forJob:(JobObject *)job;
+- (void)completeShift:(Shift *)shift endDate:(NSDate *)endDate;
+- (NSDate *)getCurrentDate;
+- (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
+- (NSMutableArray *)sortByDate:(NSMutableArray *)shifts;
+- (NSUInteger)fetchTotalShiftCount;
+- (NSString *)calculatePay:(Shift *)shift;
 
 @end

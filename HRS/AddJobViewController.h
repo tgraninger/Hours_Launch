@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Job.h"
 
 @interface AddJobViewController : UIViewController
+@property BOOL isEditingJob;
+@property (nonatomic, retain) Job *jobToEdit;
 @property (weak, nonatomic) IBOutlet UITextField *employerField;
 @property (weak, nonatomic) IBOutlet UITextField *jobTitleField;
 @property (weak, nonatomic) IBOutlet UITextField *wageField;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *otSegCtrl;
 
 @end

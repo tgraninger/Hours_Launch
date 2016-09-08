@@ -7,6 +7,7 @@
 //
 
 #import "ShiftDetailsViewController.h"
+#import "NSDate+NSDate_StringMethods.h"
 
 @interface ShiftDetailsViewController ()
 
@@ -15,8 +16,7 @@
 @implementation ShiftDetailsViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
   NSArray *labels = @[self.dateLabel, self.hoursLabel, self.startLabel, self.outLabel];
   for (UILabel *label in labels) {
     CALayer *layer = [label layer];
@@ -27,9 +27,19 @@
     [bottomBorder setBorderColor:[UIColor blueColor].CGColor];
     [layer addSublayer:bottomBorder];
   }
-  // DAO method to parse date data...
-  // Parse dates into strings..
+  [self displayDetailsForShift];
 }
+
+- (void)displayDetailsForShift {
+  self.dateLabel.text = [self.selectedShift.startTime getStartDate:self.selectedShift.startTime];
+  self.startLabel.text = [self.selectedShift.startTime getStartTime:self.selectedShift.startTime];
+  self.outLabel.text = [self.selectedShift.endTime getEndTime:self.selectedShift.endTime];
+  double hours = [[[DAO sharedInstance]hoursBetween:self.selectedShift.startTime and:self.selectedShift.endTime]doubleValue];
+  self.hoursLabel.text = [NSString stringWithFormat:@"%.2f", hours];
+  self.payLabel.text = [NSString stringWithFormat:@"%@", [[DAO sharedInstance]calculatePay:self.selectedShift]];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
