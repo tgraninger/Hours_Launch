@@ -36,7 +36,7 @@
   self.outLabel.text = [self.selectedShift.endTime getEndTime:self.selectedShift.endTime];
   double hours = [[[DAO sharedInstance]hoursBetween:self.selectedShift.startTime and:self.selectedShift.endTime]doubleValue];
   self.hoursLabel.text = [NSString stringWithFormat:@"%.2f", hours];
-  self.payLabel.text = [NSString stringWithFormat:@"%@", [[DAO sharedInstance]calculatePay:self.selectedShift]];
+  self.payLabel.text = [NSString stringWithFormat:@"%.2f", [[[DAO sharedInstance]calculatePay:self.selectedShift]doubleValue]];
 }
 
 

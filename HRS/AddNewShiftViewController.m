@@ -27,7 +27,7 @@
 }
 
 - (void)handleIncompleteShift {
-  if (self.dao.incompleteShifts) {
+  if (self.dao.hasIncompleteShifts) {
     self.handlingOutTimeForCurrentShift = YES;
     self.currentShift = [self.dao.incompleteShifts objectAtIndex:0];
   } else {

@@ -72,8 +72,6 @@
   }
 }
 
-
-
 - (void)checkForIncompleteShifts {
   for (Job *job in self.managedJobs) {
     for (Shift *shift in [job.shifts allObjects]) {
@@ -180,12 +178,12 @@
   return today;
 }
 
-- (NSString *)calculatePay:(Shift *)shift {
+- (NSNumber *)calculatePay:(Shift *)shift {
   float hours = [[self hoursBetween:shift.startTime and:shift.endTime]floatValue];
   float wage = [shift.hourlyWage floatValue];
   float estPay = hours * wage;
   NSNumber *pay = [NSNumber numberWithFloat:estPay];
-  return [self createStringFromNumber:pay];
+  return pay;
 }
 
 

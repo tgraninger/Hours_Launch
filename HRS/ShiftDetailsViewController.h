@@ -13,6 +13,7 @@
 
 @interface ShiftDetailsViewController : UIViewController
 
+@property (nonatomic, retain) Job *selectedJob;
 @property (nonatomic, retain) Shift *selectedShift;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hoursLabel;

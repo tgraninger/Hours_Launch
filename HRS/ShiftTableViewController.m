@@ -68,10 +68,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//  NSInteger sec = [self.tableView indexPath];
-//  ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[segue destinationViewController];
-//  sdvc.selectedShift = [self.shifts objectAtIndex:index.row];
+  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+  ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[segue destinationViewController];
+  sdvc.selectedJob = [self.dao.managedJobs objectAtIndex:indexPath.section];
+  sdvc.selectedShift = [[sdvc.selectedJob.shifts allObjects] objectAtIndex:indexPath.row];
 }
 
 
