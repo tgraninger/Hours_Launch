@@ -20,18 +20,26 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.dao = [DAO sharedInstance];
-  [self handleIncompleteShift];
   [self setupJobPicker];
   [self setupLabels];
   [self styleButtons];
+  self.currentJob = [self.dao.managedJobs objectAtIndex:0];
+  self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+  [self handleIncompleteShift];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:YES];
+  [self.jobPicker reloadComponent:0];
 }
 
 - (void)handleIncompleteShift {
-  if (self.dao.hasIncompleteShifts) {
+  if (self.currentShift) {
     self.handlingOutTimeForCurrentShift = YES;
-    self.currentShift = [self.dao.incompleteShifts objectAtIndex:0];
+      [self completingExistingShift];
   } else {
     self.handlingOutTimeForCurrentShift = NO;
+    [self creatingNewShift];
   }
 }
 
@@ -133,8 +141,9 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-  self.currentJob = [self.dao.managedJobs objectAtIndex:row];
-  NSLog(@"current job : %@",self.currentJob);
+  self.currentJob = [self.dao.managedJobs objectAtIndex:[self.jobPicker selectedRowInComponent:0]];
+  self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+  [self handleIncompleteShift];
 }
 
 - (void)styleButtons {

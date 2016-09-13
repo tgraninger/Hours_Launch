@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+    <entity name="CurrentShift" syncable="YES">
+        <attribute name="endTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="currentShift" inverseEntity="Job" syncable="YES"/>
+    </entity>
     <entity name="Job" representedClassName="Job" syncable="YES">
         <attribute name="employer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hourlyWage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="jobTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="overtimeWage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="currentShift" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentShift" inverseName="job" inverseEntity="CurrentShift" syncable="YES"/>
         <relationship name="shifts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Shift" inverseName="job" inverseEntity="Shift" syncable="YES"/>
     </entity>
     <entity name="Shift" representedClassName="Shift" parentEntity="Job" syncable="YES">
@@ -13,7 +19,8 @@
         <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="shifts" inverseEntity="Job" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Job" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Job" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="Shift" positionX="-63" positionY="270" width="128" height="88"/>
+        <element name="CurrentShift" positionX="-54" positionY="135" width="128" height="90"/>
     </elements>
 </model>

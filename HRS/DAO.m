@@ -66,27 +66,25 @@
   }
   if ([result count] != 0) {
     self.managedJobs = [NSMutableArray arrayWithArray:result];
-    [self checkForIncompleteShifts];
   } else {
     [self addJob:@"(Employer)" title:@"(JobTitle)" wage:nil];
   }
 }
 
-- (void)checkForIncompleteShifts {
-  for (Job *job in self.managedJobs) {
-    for (Shift *shift in [job.shifts allObjects]) {
-      if (!shift.endTime) {
-        if (!self.incompleteShifts) {
-          self.incompleteShifts = [NSMutableArray array];
-        }
-        [self.incompleteShifts addObject:shift];
-      }
+- (Shift *)checkForIncompleteShiftForJob:(Job *)currentJob {
+  //  Add shifts without end time to array and sort by most recent...
+  NSMutableArray *incShifts = [NSMutableArray array];
+  for (Shift *shift in currentJob.shifts) {
+    if (!shift.endTime) {
+      [incShifts addObject:shift];
     }
   }
-  if (self.incompleteShifts) {
-    self.incompleteShifts = [self sortByDate:self.incompleteShifts];
+  if ([incShifts count] > 0) {
+    self.hasIncompleteShifts = YES;
+    [self sortByDate:incShifts];
+    return [incShifts objectAtIndex:0];
   } else {
-    self.incompleteShifts = nil;
+    return nil;
   }
 }
 
@@ -141,7 +139,6 @@
   return shiftCount;
 }
 
-
 - (void)saveChanges {
   NSError *err = nil;
   BOOL successful = [[self context] save:&err];
@@ -178,9 +175,9 @@
   return today;
 }
 
-- (NSNumber *)calculatePay:(Shift *)shift {
+- (NSNumber *)calculateShiftPay:(Shift *)shift forJob:(Job *)job {
   float hours = [[self hoursBetween:shift.startTime and:shift.endTime]floatValue];
-  float wage = [shift.hourlyWage floatValue];
+  float wage = [job.hourlyWage floatValue];
   float estPay = hours * wage;
   NSNumber *pay = [NSNumber numberWithFloat:estPay];
   return pay;
