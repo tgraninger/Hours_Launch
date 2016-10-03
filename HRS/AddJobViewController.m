@@ -18,16 +18,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  [self.employerField setDelegate:self];
+  [self.jobTitleField setDelegate:self];
+  [self.wageField setDelegate:self];
   if (self.isEditingJob) {
     [self.employerField setText:self.jobToEdit.employer];
     [self.jobTitleField setText:self.jobToEdit.jobTitle];
     [self.wageField setText:[NSString stringWithFormat:@"%@", self.jobToEdit.hourlyWage]];
+  } else {
+    [self.employerField setPlaceholder:@"Employer"];
+    [self.jobTitleField setPlaceholder:@"Job Title"];
+    [self.wageField setPlaceholder:@"Wage"];
   }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+  return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+  textField.text = @"";
 }
 
 - (IBAction)saveButtonPressed:(id)sender {

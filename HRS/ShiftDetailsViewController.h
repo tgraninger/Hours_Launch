@@ -11,7 +11,7 @@
 #import "Job.h"
 #import "Shift.h"
 
-@interface ShiftDetailsViewController : UIViewController
+@interface ShiftDetailsViewController : UIViewController 
 
 @property (nonatomic, retain) Job *selectedJob;
 @property (nonatomic, retain) Shift *selectedShift;

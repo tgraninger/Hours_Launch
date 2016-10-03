@@ -10,6 +10,8 @@
 #import "DAO.h"
 #import "Job.h"
 #import "Shift.h"
+#import "TabBarViewController.h"
+#import "ShiftDetailsViewController.h"
 
 @interface AddNewShiftViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -26,5 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *useCurrentTime;
 @property (weak, nonatomic) IBOutlet UIButton *selectTime;
 @property BOOL handlingOutTimeForCurrentShift;
+@property BOOL shouldPopToHistoryView;
+
 
 @end

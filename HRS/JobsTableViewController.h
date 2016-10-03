@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ShiftDetailsViewController.h"
-#import "Shift.h"
 
-@interface ShiftTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JobsTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

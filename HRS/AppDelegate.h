@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DAO.h"
+#import "TabBarViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

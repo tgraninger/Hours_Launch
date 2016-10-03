@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Job.h"
 
-@interface AddJobViewController : UIViewController
+@interface AddJobViewController : UIViewController <UITextFieldDelegate>
 @property BOOL isEditingJob;
 @property (nonatomic, retain) Job *jobToEdit;
 @property (weak, nonatomic) IBOutlet UITextField *employerField;

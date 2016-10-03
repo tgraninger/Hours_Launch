@@ -22,14 +22,18 @@
 + (instancetype) sharedInstance;
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wage:(NSNumber *)wage;
 - (void)editExistingJob:(Job *)job employer:(NSString *)emp jobTitle:(NSString *)jt wage:(NSNumber *)wage;
+- (void)deleteJob:(Job *)job;
 - (Shift *)checkForIncompleteShiftForJob:(Job *)currentJob;
 - (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)currentDate;
 - (NSNumber *)createNumberFromString:(NSString *)string;
 - (void)completeShift:(Shift *)shift endDate:(NSDate *)endDate;
+- (Shift *)editShift:(Shift *)shift start:(NSDate *)start end:(NSDate *)end;
+- (void)deleteShift:(Shift *)shift;
 - (NSDate *)getCurrentDate;
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate;
 - (NSMutableArray *)sortByDate:(NSMutableArray *)shifts;
 - (NSUInteger)fetchTotalShiftCount;
 - (NSNumber *)calculateShiftPay:(Shift *)shift forJob:(Job *)job;
+- (NSDate *)formatStringToDate:(NSString *)string;
 
 @end

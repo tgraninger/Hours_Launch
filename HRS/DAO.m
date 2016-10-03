@@ -49,7 +49,6 @@
   return [documentDirectory stringByAppendingString:@"store.data"];
 }
 
-
 - (void)fetchDataFromContext{
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"employer MATCHES '.*'"];
@@ -75,6 +74,7 @@
   //  Add shifts without end time to array and sort by most recent...
   NSMutableArray *incShifts = [NSMutableArray array];
   for (Shift *shift in currentJob.shifts) {
+    NSLog(@"%@", shift.startTime);
     if (!shift.endTime) {
       [incShifts addObject:shift];
     }
@@ -117,6 +117,12 @@
   [self saveChanges];
 }
 
+- (void)deleteJob:(Job *)job {
+  [self.managedJobs removeObject:job];
+  [self.context deleteObject:job];
+  [self saveChanges];
+}
+
 - (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)currentDate {
   Shift *shift = [NSEntityDescription insertNewObjectForEntityForName:@"Shift" inManagedObjectContext:self.context];
   [shift setStartTime:currentDate];
@@ -128,6 +134,18 @@
 // invoke in addNewShiftVC if currentTimeButton selected to store currentTime as outTime...
 - (void)completeShift:(Shift *)shift endDate:(NSDate *)endDate {
   [shift setEndTime:endDate];
+  [self saveChanges];
+}
+
+- (Shift *)editShift:(Shift *)shift start:(NSDate *)start end:(NSDate *)end {
+  [shift setStartTime:start];
+  [shift setEndTime:end];
+  [self saveChanges];
+  return shift;
+}
+
+- (void)deleteShift:(Shift *)shift {
+  [self.context deleteObject:shift];
   [self saveChanges];
 }
 
@@ -147,6 +165,8 @@
   }
   NSLog(@"Data Saved");
 }
+
+//  Methods to calculate / convert...
 
 - (NSNumber *)hoursBetween:(NSDate *)firstDate and:(NSDate *)secondDate {
   NSTimeInterval distanceBetweenDates = [secondDate timeIntervalSinceDate:firstDate];
@@ -183,6 +203,12 @@
   return pay;
 }
 
-
+- (NSDate *)formatStringToDate:(NSString *)string {
+  NSDateFormatter *df = [[NSDateFormatter alloc]init];
+  [df setDateFormat:@"MM-dd-yyyy HH:mm"];
+  NSDate *date = [df dateFromString:string];
+  NSLog(@"%@", date);
+  return date;
+}
 
 @end
