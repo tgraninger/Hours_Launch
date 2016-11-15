@@ -4,7 +4,7 @@ Simple iOS Application for users to track their work hours.
 
 Home screen - users are prompted with an interface that allows them to quickly select their job and clock in.
 
-![screen shot 2016-11-15 at 3 19 09 pm](https://cloud.githubusercontent.com/assets/9935994/20322822/6f8a85d6-ab48-11e6-947e-4af04a6109e9.png) 
+![screen shot 2016-11-15 at 3 41 20 pm](https://cloud.githubusercontent.com/assets/9935994/20323314/26047ad2-ab4a-11e6-9325-7d95edb78a56.png) ![screen shot 2016-11-15 at 3 19 09 pm](https://cloud.githubusercontent.com/assets/9935994/20322822/6f8a85d6-ab48-11e6-947e-4af04a6109e9.png) 
 
 Job interface - users can manage their jobs, or tap to see the shifts they have logged for that job.
 
