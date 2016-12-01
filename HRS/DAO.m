@@ -66,7 +66,7 @@
   if ([result count] != 0) {
     self.managedJobs = [NSMutableArray arrayWithArray:result];
   } else {
-    [self addJob:@"(Employer)" title:@"(JobTitle)" wage:nil];
+    [self addJob:@"Employer" title:@"JobTitle" wage:nil];
   }
 }
 

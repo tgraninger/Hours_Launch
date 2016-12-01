@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CDE94CD02C34EE95A768BEAB1085495A14878170",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A57C6E3DBCE0608B15B7E55798B1BA6C9A0A395A" : 9223372036854775807,
+    "CDE94CD02C34EE95A768BEAB1085495A14878170" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B75A9920-1317-4194-ABF9-DEA5F31A09F7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A57C6E3DBCE0608B15B7E55798B1BA6C9A0A395A" : "",
+    "CDE94CD02C34EE95A768BEAB1085495A14878170" : "HRS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HRS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HRS.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tgraninger\/vol_test.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A57C6E3DBCE0608B15B7E55798B1BA6C9A0A395A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tgraninger\/Hours_Launch.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CDE94CD02C34EE95A768BEAB1085495A14878170"
+    }
+  ]
+}

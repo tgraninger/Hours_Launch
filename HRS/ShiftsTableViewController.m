@@ -42,12 +42,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [[self.selectedjob.shifts allObjects]count];
+  return [[[[self.dao.managedJobs objectAtIndex:0]shifts] allObjects]count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shiftCell" forIndexPath:indexPath];
-  self.shifts = [self.dao sortByDate:[NSMutableArray arrayWithArray:[self.selectedjob.shifts allObjects]]];
+  self.shifts = [self.dao sortByDate:[NSMutableArray arrayWithArray:[[[self.dao.managedJobs objectAtIndex:0]shifts] allObjects]]];
   Shift *shift = [self.shifts objectAtIndex:indexPath.row];
   cell.textLabel.text = [NSString stringWithFormat:@"Shift date: %@",[shift.startTime getStartDate:shift.startTime]];
   cell.detailTextLabel.text = [NSString stringWithFormat:@"Hours worked: %.2f", [[self.dao hoursBetween:shift.startTime and:shift.endTime]floatValue]];

@@ -26,14 +26,14 @@
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  self.dao = [DAO sharedInstance];
-  [self setupJobPicker];
-  [self setupLabels];
-  [self styleButtons];
-  self.currentJob = [self.dao.managedJobs objectAtIndex:0];
-  self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
-  [self handleIncompleteShift];
+   [super viewDidLoad];
+    self.dao = [DAO sharedInstance];
+    [self setupJobPicker];
+    [self setupLabels];
+    [self styleButtons];
+    self.currentJob = [self.dao.managedJobs objectAtIndex:0];
+    self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+    [self handleIncompleteShift];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -52,7 +52,6 @@
 }
 
 - (void)setupJobPicker {
-  [self checkIfHardcodedJobDetails];
   [self.jobPicker setHidden:NO];
   [self.jobPicker setDelegate:self];
   [self.jobPicker setDataSource:self];
@@ -72,6 +71,22 @@
   } else {
     [self creatingNewShift];
   }
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+	self.currentJob = [self.dao.managedJobs objectAtIndex:[self.jobPicker selectedRowInComponent:0]];
+	self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+	[self handleIncompleteShift];
+}
+
+- (void)styleButtons {
+	NSArray *buttons = [NSArray arrayWithObjects:self.useCurrentTime, self.selectTime, nil];
+	for (UITextField *button in buttons) {
+		[button.layer setBorderWidth:1.0];
+		[button.layer setBorderColor:[[UIColor blueColor]CGColor]];
+		[button.layer setMasksToBounds:YES];
+		[button sizeToFit];
+	}
 }
 
 - (void)creatingNewShift {
@@ -107,57 +122,6 @@
   }
 }
 
-- (IBAction)manuallySelectTime:(id)sender {
-  [self.useCurrentTime setHidden:YES];
-  [self.selectTime setHidden:YES];
-  datePicker = [[UIDatePicker alloc] init];
-  [datePicker addTarget:self action:@selector(datePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
-  CGRect screenRect = [self.view frame];
-  CGSize pickerSize = [datePicker sizeThatFits:CGSizeZero];
-  CGRect pickerRect = CGRectMake(0.0,
-                                 screenRect.origin.y + screenRect.size.height - pickerSize.height,
-                                 pickerSize.width,
-                                 pickerSize.height);
-  datePicker.frame = pickerRect;
-  [self.view addSubview:datePicker];
-  if (doneButton == nil){
-    doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(dateSelected:)];
-  }
-  self.navigationItem.rightBarButtonItem = doneButton;
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                 initWithTarget:self
-                                 action:@selector(dismissPicker)];
-  [self.view addGestureRecognizer:tap];
-}
-
-- (void)datePickerDateChanged:(UIDatePicker *)dp{
-
-}
-
-- (void)dateSelected:(id)sender {
-  if (self.handlingOutTimeForCurrentShift) {
-    [self setHandlingOutTimeForCurrentShift:NO];
-    [self.dao completeShift:self.currentShift endDate:datePicker.date];
-    [self creatingNewShift];
-    [self popToHistoryView];
-  } else {
-    [self setHandlingOutTimeForCurrentShift:YES];
-    self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:datePicker.date];
-    [self completingExistingShift];
-  }
-  self.navigationItem.rightBarButtonItem = nil;
-  [self.useCurrentTime setHidden:NO];
-  [self.selectTime setHidden:NO];
-  [datePicker removeFromSuperview];
-}
-
-- (void)dismissPicker {
-  self.navigationItem.rightBarButtonItem = nil;
-  [datePicker removeFromSuperview];
-  [self.useCurrentTime setHidden:NO];
-  [self.selectTime setHidden:NO];
-}
-
 - (void)popToHistoryView {
   UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[sb instantiateViewControllerWithIdentifier:@"shiftDetails"];
@@ -180,6 +144,61 @@
   [self popToHistoryView];
 }
 
+#pragma mark - DatePickerViewMethods
+
+- (IBAction)manuallySelectTime:(id)sender {
+	[self.useCurrentTime setHidden:YES];
+	[self.selectTime setHidden:YES];
+	datePicker = [[UIDatePicker alloc] init];
+	[datePicker addTarget:self action:@selector(datePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
+	CGRect screenRect = [self.view frame];
+	CGSize pickerSize = [datePicker sizeThatFits:CGSizeZero];
+	CGRect pickerRect = CGRectMake(0.0,
+								   screenRect.origin.y + screenRect.size.height - pickerSize.height,
+								   pickerSize.width,
+								   pickerSize.height);
+	datePicker.frame = pickerRect;
+	[self.view addSubview:datePicker];
+	if (doneButton == nil){
+		doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(dateSelected:)];
+	}
+	self.navigationItem.rightBarButtonItem = doneButton;
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+								   initWithTarget:self
+								   action:@selector(dismissPicker)];
+	[self.view addGestureRecognizer:tap];
+}
+
+- (void)datePickerDateChanged:(UIDatePicker *)dp{
+	
+}
+
+- (void)dateSelected:(id)sender {
+	if (self.handlingOutTimeForCurrentShift) {
+		[self setHandlingOutTimeForCurrentShift:NO];
+		[self.dao completeShift:self.currentShift endDate:datePicker.date];
+		[self creatingNewShift];
+		[self popToHistoryView];
+	} else {
+		[self setHandlingOutTimeForCurrentShift:YES];
+		self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:datePicker.date];
+		[self completingExistingShift];
+	}
+	self.navigationItem.rightBarButtonItem = nil;
+	[self.useCurrentTime setHidden:NO];
+	[self.selectTime setHidden:NO];
+	[datePicker removeFromSuperview];
+}
+
+- (void)dismissPicker {
+	self.navigationItem.rightBarButtonItem = nil;
+	[datePicker removeFromSuperview];
+	[self.useCurrentTime setHidden:NO];
+	[self.selectTime setHidden:NO];
+}
+
+#pragma mark - JobPickerViewDelegates
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
   return 1;
 }
@@ -189,39 +208,16 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-  NSString *str;
-  if ([self checkIfHardcodedJobDetails]) {
+	
+	if ([self checkIfHardcodedJobDetails]) {
     [self.jobPickerTitleLabel setText:@"Edit job details in job tab."];
-    str = @"My Job";
-  } else {
-    str = [NSString stringWithFormat:@"%@: %@", [[self.dao.managedJobs objectAtIndex:row]employer], [[self.dao.managedJobs objectAtIndex:row]jobTitle]];
-  }
-  [self handleIncompleteShift];
-  return str;
+	}
+	[self handleIncompleteShift];
+	return [NSString stringWithFormat:@"%@: %@", [[self.dao.managedJobs objectAtIndex:row]employer], [[self.dao.managedJobs objectAtIndex:row]jobTitle]];;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
   return 30;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-  self.currentJob = [self.dao.managedJobs objectAtIndex:[self.jobPicker selectedRowInComponent:0]];
-  self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
-  [self handleIncompleteShift];
-}
-
-- (void)styleButtons {
-  NSArray *buttons = [NSArray arrayWithObjects:self.useCurrentTime, self.selectTime, nil];
-  for (UITextField *button in buttons) {
-    [button.layer setBorderWidth:2.0];
-    [button.layer setBorderColor:[[UIColor blueColor]CGColor]];
-    [button.layer setMasksToBounds:YES];
-    [button sizeToFit];
-  }
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
 }
 
 @end

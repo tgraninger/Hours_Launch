@@ -23,6 +23,7 @@
 		CE9FF50A1D70E711007536A2 /* Shift+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5051D70E711007536A2 /* Shift+CoreDataProperties.m */; };
 		CE9FF50B1D70E711007536A2 /* Shift.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF5071D70E711007536A2 /* Shift.m */; };
 		CE9FF50E1D70E8AB007536A2 /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9FF50D1D70E8AB007536A2 /* JobsTableViewController.m */; };
+		CECF25C01DEF8C690009612E /* AddShiftTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF25BF1DEF8C690009612E /* AddShiftTableViewController.m */; };
 		CED0872D1D9C5F46006DDE22 /* ShiftsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED0872C1D9C5F46006DDE22 /* ShiftsTableViewController.m */; };
 		CED087301D9C6972006DDE22 /* EditShiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED0872F1D9C6972006DDE22 /* EditShiftViewController.m */; };
 		CEECA4941D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = CEECA4931D7790EF00A0E13A /* NSDate+NSDate_StringMethods.m */; };
@@ -60,6 +61,8 @@
 		CE9FF5071D70E711007536A2 /* Shift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shift.m; path = ../Shift.m; sourceTree = "<group>"; };
 		CE9FF50C1D70E8AB007536A2 /* JobsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsTableViewController.h; sourceTree = "<group>"; };
 		CE9FF50D1D70E8AB007536A2 /* JobsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableViewController.m; sourceTree = "<group>"; };
+		CECF25BE1DEF8C690009612E /* AddShiftTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddShiftTableViewController.h; sourceTree = "<group>"; };
+		CECF25BF1DEF8C690009612E /* AddShiftTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddShiftTableViewController.m; sourceTree = "<group>"; };
 		CED0872B1D9C5F46006DDE22 /* ShiftsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShiftsTableViewController.h; sourceTree = "<group>"; };
 		CED0872C1D9C5F46006DDE22 /* ShiftsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShiftsTableViewController.m; sourceTree = "<group>"; };
 		CED0872E1D9C6972006DDE22 /* EditShiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditShiftViewController.h; sourceTree = "<group>"; };
@@ -102,9 +105,9 @@
 		CE5068AA1D36C578003C1B95 /* HRS */ = {
 			isa = PBXGroup;
 			children = (
-				CE5068F01D36E50F003C1B95 /* Core Data Classes */,
-				CE5068C41D36CD89003C1B95 /* Custom Object Classes */,
 				CE5068C31D36CD83003C1B95 /* Data Classes */,
+				CE5068C41D36CD89003C1B95 /* Custom Object Classes */,
+				CE5068F01D36E50F003C1B95 /* Core Data Classes */,
 				CE5068C21D36CD7D003C1B95 /* View Controllers */,
 				CE5068EF1D36E36C003C1B95 /* App Delegate */,
 				CE5068AB1D36C578003C1B95 /* Supporting Files */,
@@ -143,6 +146,8 @@
 				CE2529FD1D3D61F6007384BE /* ShiftDetailsViewController.m */,
 				CED0872E1D9C6972006DDE22 /* EditShiftViewController.h */,
 				CED0872F1D9C6972006DDE22 /* EditShiftViewController.m */,
+				CECF25BE1DEF8C690009612E /* AddShiftTableViewController.h */,
+				CECF25BF1DEF8C690009612E /* AddShiftTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				CE5068F61D36EE80003C1B95 /* AddNewShiftViewController.m in Sources */,
 				CED0872D1D9C5F46006DDE22 /* ShiftsTableViewController.m in Sources */,
 				CE9FF5091D70E711007536A2 /* Job.m in Sources */,
+				CECF25C01DEF8C690009612E /* AddShiftTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
