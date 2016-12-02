@@ -32,7 +32,7 @@
     [self setupLabels];
     [self styleButtons];
     self.currentJob = [self.dao.managedJobs objectAtIndex:0];
-    self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+//    self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
     [self handleIncompleteShift];
 }
 
@@ -75,7 +75,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	self.currentJob = [self.dao.managedJobs objectAtIndex:[self.jobPicker selectedRowInComponent:0]];
-	self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
+//	self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
 	[self handleIncompleteShift];
 }
 

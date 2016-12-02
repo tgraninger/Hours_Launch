@@ -29,12 +29,12 @@
   self.updatedEndTime.delegate = self;
   self.updatedEndTime.tag = 1;
   self.dao = [DAO sharedInstance];
-  if (self.shiftToEdit.startTime) {
-     self.updatedStartTime.text = [NSString stringWithFormat:@"%@ %@",[self.shiftToEdit.startTime getStartDate:self.shiftToEdit.startTime],[self.shiftToEdit.startTime getStartTime:self.shiftToEdit.startTime]];
-  }
-  if (self.shiftToEdit.endTime) {
-    self.updatedEndTime.text = [NSString stringWithFormat:@"%@ %@",[self.shiftToEdit.endTime getEndDate:self.shiftToEdit.endTime],[self.shiftToEdit.endTime getEndTime:self.shiftToEdit.endTime]];
-  }
+//  if (self.shiftToEdit.startTime) {
+//     self.updatedStartTime.text = [NSString stringWithFormat:@"%@ %@",[self.shiftToEdit.startTime getStartDate:self.shiftToEdit.startTime],[self.shiftToEdit.startTime getStartTime:self.shiftToEdit.startTime]];
+//  }
+//  if (self.shiftToEdit.endTime) {
+//    self.updatedEndTime.text = [NSString stringWithFormat:@"%@ %@",[self.shiftToEdit.endTime getEndDate:self.shiftToEdit.endTime],[self.shiftToEdit.endTime getEndTime:self.shiftToEdit.endTime]];
+//  }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -105,12 +105,28 @@
 //}
 
 - (IBAction)saveButtonPressed:(id)sender {
-  date1 = [self.dao formatStringToDate:self.updatedStartTime.text];
-  date2 = [self.dao formatStringToDate:self.updatedEndTime.text];
-  self.shiftToEdit = [self.dao editShift:self.shiftToEdit start:date1 end:date2];
-  self.shiftDetailsViewController.selectedShift = self.shiftToEdit;
-//  [self.delegate passDataToParent:self.shiftToEdit];
-  [self.navigationController popViewControllerAnimated:YES];
+	
+	if ([self.updatedStartTime.text  isEqualToString: @""] || [self.updatedEndTime.text isEqualToString: @""]) {
+		
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Incomplete fields" message:@"Please enter a start time and an end time or return to Time Sheets." preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+		
+		[alert addAction:cancel];
+		[self presentViewController:alert animated:YES completion:nil];
+		
+	} else {
+		NSDateFormatter *df = [[NSDateFormatter alloc]init];
+		[df setDateFormat:@"MM-dd-yy HH:mm"];
+		NSDate *newStart = [df dateFromString:self.updatedStartTime.text];
+		NSDate *newEnd = [df dateFromString:self.updatedEndTime.text];
+		
+		date1 = [self.dao formatStringToDate:[df stringFromDate:newStart]];
+		date2 = [self.dao formatStringToDate:[df stringFromDate:newEnd]];
+		self.shiftToEdit = [self.dao editShift:self.shiftToEdit start:date1 end:date2];
+		self.shiftDetailsViewController.selectedShift = self.shiftToEdit;
+		//  [self.delegate passDataToParent:self.shiftToEdit];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
 }
 
 - (void)didReceiveMemoryWarning {

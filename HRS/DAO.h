@@ -21,10 +21,11 @@
 
 + (instancetype) sharedInstance;
 - (void)addJob:(NSString *)employer title:(NSString *)jobTitle wage:(NSNumber *)wage;
+- (Job *)passJobToView;
+- (Shift *)checkForIncompleteShiftForJob:(Job *)job;
 - (void)editExistingJob:(Job *)job employer:(NSString *)emp jobTitle:(NSString *)jt wage:(NSNumber *)wage;
 - (void)deleteJob:(Job *)job;
-- (Shift *)checkForIncompleteShiftForJob:(Job *)currentJob;
-- (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)currentDate;
+- (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)date;
 - (NSNumber *)createNumberFromString:(NSString *)string;
 - (void)completeShift:(Shift *)shift endDate:(NSDate *)endDate;
 - (Shift *)editShift:(Shift *)shift start:(NSDate *)start end:(NSDate *)end;

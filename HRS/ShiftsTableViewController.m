@@ -21,8 +21,11 @@
 @implementation ShiftsTableViewController
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  self.dao = [DAO sharedInstance];
+	[super viewDidLoad];
+	self.dao = [DAO sharedInstance];
+	self.tableView.backgroundView = nil;
+	self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {

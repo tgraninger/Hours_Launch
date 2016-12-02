@@ -47,11 +47,12 @@
 
 #import "AddShiftTableViewController.h"
 #import "DAO.h"
+#import "Job.h"
 #import "Shift.h"
 #import "NSDate+NSDate_StringMethods.h"
 #import "ShiftDetailsViewController.h"
 
-#define kPickerAnimationDuration    0.40   // duration for the animation to slide the date picker into view
+#define kPickerAnimationDuration    0.20   // duration for the animation to slide the date picker into view
 #define kDatePickerTag              99     // view tag identifiying the date picker view
 
 #define kMainLabelKey       @"title"   // key for obtaining the data source item's title
@@ -60,11 +61,9 @@
 // keep track of which rows have date cells
 #define kDateStartRow   1
 
-
 static NSString *kDateCellID = @"dateCell";     // the cells with the start or end date
 static NSString *kDatePickerID = @"datePicker"; // the cell containing the date picker
 static NSString *kOtherCell = @"otherCell";     // the remaining cells at the end
-
 
 #pragma mark -
 
@@ -74,6 +73,7 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 @property (nonatomic, strong) Job *currentJob;
 @property (nonatomic, strong) Shift *currentShift;
 
+@property (nonatomic, strong) NSMutableDictionary *dataForCurrentTime;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
@@ -83,6 +83,8 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 @property (assign) NSInteger pickerCellRowHeight;
 
 @property (nonatomic, strong) IBOutlet UIDatePicker *pickerView;
+
+@property (nonatomic, strong) NSDate *currentDateInDatePicker;
 
 // this button appears only when the date picker is shown (iOS 6.1.x or earlier)
 
@@ -95,25 +97,23 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 
 /*! Primary view has been loaded for this view controller
  */
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	self.dao = [DAO sharedInstance];
 	
-	self.currentShift = [self.dao checkForIncompleteShiftForJob:[self.dao.managedJobs objectAtIndex:0]];
-	
+	self.currentJob = [self.dao passJobToView];
+		
+	self.currentShift = [self.dao checkForIncompleteShiftForJob:self.currentJob];
 	
 	// setup our data source
 	
-	
-	NSMutableDictionary *itemOne = [@{ kMainLabelKey : @"With current time",
+	self.dataForCurrentTime = [@{ kMainLabelKey : @"With current time",
 										kDateKey : [NSDate date] } mutableCopy];
-	NSMutableDictionary *itemTwo = [@{ kMainLabelKey : @"Select other time",
+	NSMutableDictionary *itemTwo = [@{ kMainLabelKey : @"Select time manually",
 										kDateKey : [NSDate date]} mutableCopy];
 	
 	self.dataArray = [NSMutableArray array];
-	[self.dataArray addObject:itemOne];
 	[self.dataArray addObject:itemTwo];
 	
 	self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -133,8 +133,7 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 											   object:nil];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:NSCurrentLocaleDidChangeNotification
 												  object:nil];
@@ -145,8 +144,7 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 
 /*! Responds to region format or locale changes.
  */
-- (void)localeChanged:(NSNotification *)notif
-{
+- (void)localeChanged:(NSNotification *)notif {
 	// the user changed the locale (region format) in Settings, so we are notified here to
 	// update the date format in the table view cells
 	//
@@ -158,8 +156,7 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 
 /*! Returns the major version of iOS, (i.e. for iOS 6.1.3 it returns 6)
  */
-NSUInteger DeviceSystemMajorVersion()
-{
+NSUInteger DeviceSystemMajorVersion() {
 	static NSUInteger _deviceSystemMajorVersion = -1;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -177,32 +174,31 @@ NSUInteger DeviceSystemMajorVersion()
  
  @param indexPath The indexPath to check if its cell has a UIDatePicker below it.
  */
-- (BOOL)hasPickerForIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)hasPickerForIndexPath:(NSIndexPath *)indexPath {
 	BOOL hasDatePicker = NO;
 	
 	NSInteger targetedRow = indexPath.row;
 	targetedRow++;
 	
 	UITableViewCell *checkDatePickerCell =
-	[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:targetedRow inSection:0]];
+	[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:targetedRow inSection:1]];
 	UIDatePicker *checkDatePicker = (UIDatePicker *)[checkDatePickerCell viewWithTag:kDatePickerTag];
 	
 	hasDatePicker = (checkDatePicker != nil);
+	
 	return hasDatePicker;
 }
 
 /*! Updates the UIDatePicker's value to match with the date of the cell above it.
  */
-- (void)updateDatePicker
-{
-	if (self.datePickerIndexPath != nil)
-	{
+- (void)updateDatePicker {
+
+	if (self.datePickerIndexPath != nil) {
 		UITableViewCell *associatedDatePickerCell = [self.tableView cellForRowAtIndexPath:self.datePickerIndexPath];
 		
 		UIDatePicker *targetedDatePicker = (UIDatePicker *)[associatedDatePickerCell viewWithTag:kDatePickerTag];
-		if (targetedDatePicker != nil)
-		{
+		
+		if (targetedDatePicker != nil) {
 			// we found a UIDatePicker in this cell, so update it's date value
 			//
 			NSDictionary *itemData = self.dataArray[self.datePickerIndexPath.row - 1];
@@ -213,8 +209,7 @@ NSUInteger DeviceSystemMajorVersion()
 
 /*! Determines if the UITableViewController has a UIDatePicker in any of its cells.
  */
-- (BOOL)hasInlineDatePicker
-{
+- (BOOL)hasInlineDatePicker {
 	return (self.datePickerIndexPath != nil);
 }
 
@@ -222,8 +217,7 @@ NSUInteger DeviceSystemMajorVersion()
  
  @param indexPath The indexPath to check if it represents a cell with the UIDatePicker.
  */
-- (BOOL)indexPathHasPicker:(NSIndexPath *)indexPath
-{
+- (BOOL)indexPathHasPicker:(NSIndexPath *)indexPath {
 	return ([self hasInlineDatePicker] && self.datePickerIndexPath.row == indexPath.row);
 }
 
@@ -231,12 +225,11 @@ NSUInteger DeviceSystemMajorVersion()
  
  @param indexPath The indexPath to check if it represents start/end date cell.
  */
-- (BOOL)indexPathHasDate:(NSIndexPath *)indexPath
-{
+- (BOOL)indexPathHasDate:(NSIndexPath *)indexPath {
 	BOOL hasDate = NO;
 	
-	if ((indexPath.row == kDateStartRow) || ([self hasInlineDatePicker] && (indexPath.row == kDateStartRow + 1)))
-	{
+	// identify the cells that should have a picker...
+	if (indexPath.section == 1 && indexPath.row == 0) {
 		hasDate = YES;
 	}
 	
@@ -246,16 +239,16 @@ NSUInteger DeviceSystemMajorVersion()
 
 #pragma mark - UITableViewDataSource
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return ([self indexPathHasPicker:indexPath] ? self.pickerCellRowHeight : self.tableView.rowHeight);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	// create another section to display current shift
 	if (self.currentShift) {
-		return 2;
+		return 3;
 	}
-	return 1;
+	return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -265,62 +258,50 @@ NSUInteger DeviceSystemMajorVersion()
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	if (self.currentShift) {
 		if (section == 0) {
-			return @"Clock out:";
-		} else {
-			return @"Current shift:";
+			return @"Clock out with current time:";
+		} else if (section == 2) {
+			return @"Current Shift:";
+		}
+	} else if (section == 0) {
+		return @"Clock in with current time:";
+	}
+	
+	return @"Select time manually:";
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	
+	// if we already have a shift in our data store, we want to display it in a second section
+	if (section == 1) {
+		if ([self hasInlineDatePicker]) {
+			// we have a date picker, so allow for it in the number of rows in this section
+			NSInteger numRows = self.dataArray.count;
+			return ++numRows;
 		}
 	}
-	return @"Clock in:";
-
+	return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-
-	if ([self hasInlineDatePicker]) {
-		// we have a date picker, so allow for it in the number of rows in this section
-		
-		NSInteger numRows = self.dataArray.count;
-		return ++numRows;
-	}
-	
-	if (section == 1) {
-		return 1;
-	}
-	
-	return self.dataArray.count;
-	
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
 	
 	NSString *cellID = kOtherCell;
 	
-	if (indexPath.section == 1) {
-		cell.textLabel.text = [self.currentShift.startTime getStartDate:self.currentShift.startTime];
-		cell.detailTextLabel.text = [self.currentShift.startTime getStartTime:self.currentShift.startTime];
-	}
-	
-	if ([self indexPathHasPicker:indexPath])
-	{
+	if ([self indexPathHasPicker:indexPath]) {
 		// the indexPath is the one containing the inline date picker
 		cellID = kDatePickerID;     // the current/opened date picker cell
 	}
-	else if ([self indexPathHasDate:indexPath])
-	{
+	else if ([self indexPathHasDate:indexPath]) {
 		// the indexPath is one that contains the date information
 		cellID = kDateCellID;       // the start/end date cells
 	}
 	
 	cell = [tableView dequeueReusableCellWithIdentifier:cellID];
 	
-	if (indexPath.row == 0)
-	{
-		// we decide here that first cell in the table is not selectable (it's just an indicator)
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
+//	if (indexPath.row == 0) {
+//		// we decide here that first cell in the table is not selectable (it's just an indicator)
+//		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//	}
 	
 	// if we have a date picker open whose cell is above the cell we want to update,
 	// then we have one more cell than the model allows
@@ -333,25 +314,33 @@ NSUInteger DeviceSystemMajorVersion()
 	
 	NSMutableDictionary *itemData = self.dataArray[modelRow];
 
-	if (indexPath.section == 1) {
-		cell.textLabel.text = [self.dataArray.lastObject valueForKey:kMainLabelKey];
+	if (indexPath.section == 0) {
+		
+		NSDate *currentDate = [NSDate date];
+		
+		cell.textLabel.text = [currentDate getStartDate:currentDate];
+		cell.detailTextLabel.text = [currentDate getStartTime:currentDate];
 	}
 
 	// proceed to configure our cell
-	if ([cellID isEqualToString:kDateCellID])
-	{
+	if ([cellID isEqualToString:kDateCellID] && (indexPath.section != 0)) {
 		// we have either start or end date cells, populate their date field
 		//
 		cell.textLabel.text = [itemData objectForKey:kMainLabelKey];
 		cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[itemData valueForKey:kDateKey]];
 	}
-	else if ([cellID isEqualToString:kOtherCell])
-	{
+	else if ([cellID isEqualToString:kOtherCell] && (indexPath.section != 0)) {
 		// this cell is a non-date cell, just assign it's text label
 		//
 		cell.textLabel.text = [itemData objectForKey:kMainLabelKey];
 		cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[itemData valueForKey:kDateKey]];
 
+	}
+	
+	// show details of the current shift in the new section
+	if (indexPath.section == 2) {
+		cell.textLabel.text = [NSString stringWithFormat:@"Shift Date: %@",[self.currentShift.startTime getStartDate:self.currentShift.startTime]];
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"Clocked in: %@", [self.currentShift.startTime getStartTime:self.currentShift.startTime]];
 	}
 	
 	return cell;
@@ -361,21 +350,18 @@ NSUInteger DeviceSystemMajorVersion()
  
  @param indexPath The indexPath to reveal the UIDatePicker.
  */
-- (void)toggleDatePickerForSelectedIndexPath:(NSIndexPath *)indexPath
-{
+- (void)toggleDatePickerForSelectedIndexPath:(NSIndexPath *)indexPath {
 	[self.tableView beginUpdates];
 	
-	NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
+	NSArray *indexPaths = @[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:1]];
 	
 	// check if 'indexPath' has an attached date picker below it
-	if ([self hasPickerForIndexPath:indexPath])
-	{
+	if ([self hasPickerForIndexPath:indexPath]) {
 		// found a picker below it, so remove it
 		[self.tableView deleteRowsAtIndexPaths:indexPaths
 							  withRowAnimation:UITableViewRowAnimationFade];
 	}
-	else
-	{
+	else {
 		// didn't find a picker below it, so we should insert it
 		[self.tableView insertRowsAtIndexPaths:indexPaths
 							  withRowAnimation:UITableViewRowAnimationFade];
@@ -394,46 +380,27 @@ NSUInteger DeviceSystemMajorVersion()
 	[self.tableView beginUpdates];
 	
 	BOOL before = NO;   // indicates if the date picker is below "indexPath", help us determine which row to reveal
-	if ([self hasInlineDatePicker])
-	{
+	if ([self hasInlineDatePicker]) {
 		before = self.datePickerIndexPath.row < indexPath.row;
 	}
 	
 	BOOL sameCellClicked = (self.datePickerIndexPath.row - 1 == indexPath.row);
 	
 	// remove any date picker cell if it exists
-	if ([self hasInlineDatePicker])
-	{
+	if ([self hasInlineDatePicker]) {
 		
-		[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.datePickerIndexPath.row inSection:0]]
+		[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.datePickerIndexPath.row inSection:1]]
 							  withRowAnimation:UITableViewRowAnimationFade];
 		self.datePickerIndexPath = nil;
 		
 	}
 	
-	if (!sameCellClicked)
-	{
+	if (!sameCellClicked) {
 		// hide the old date picker and display the new one
 		NSInteger rowToReveal = (before ? indexPath.row - 1 : indexPath.row);
-		NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:0];
-		
+		NSIndexPath *indexPathToReveal = [NSIndexPath indexPathForRow:rowToReveal inSection:1];
 		[self toggleDatePickerForSelectedIndexPath:indexPathToReveal];
-		self.datePickerIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:0];
-	} else {
-		if (!self.currentShift) {
-			
-			self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:self.pickerView.date];
-			
-			int indexOfNewSection = 1;
-			[self.tableView insertSections:[NSIndexSet indexSetWithIndex:indexOfNewSection]
-						  withRowAnimation:UITableViewRowAnimationTop];
-			
-			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationBottom];
-			
-		} else {
-			[self.dao completeShift:self.currentShift endDate:self.pickerView.date];
-			[self popToHistoryView];
-		}
+		self.datePickerIndexPath = [NSIndexPath indexPathForRow:indexPathToReveal.row + 1 inSection:1];
 	}
 	
 	// always deselect the row containing the start or end date
@@ -441,8 +408,9 @@ NSUInteger DeviceSystemMajorVersion()
 	
 	[self.tableView endUpdates];
 	
-	// inform our date picker of the current date to match the current cell
 	[self updateDatePicker];
+	
+	// inform our date picker of the current date to match the current cell
 
 }
 
@@ -450,15 +418,13 @@ NSUInteger DeviceSystemMajorVersion()
  
  @param indexPath The indexPath used to display the UIDatePicker.
  */
-- (void)displayExternalDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)displayExternalDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath {
 	// first update the date picker's date value according to our model
 	NSDictionary *itemData = self.dataArray[indexPath.row];
 	[self.pickerView setDate:[itemData valueForKey:kDateKey] animated:YES];
 	
 	// the date picker might already be showing, so don't add it to our view
-	if (self.pickerView.superview == nil)
-	{
+	if (self.pickerView.superview == nil) {
 		CGRect startFrame = self.pickerView.frame;
 		CGRect endFrame = self.pickerView.frame;
 		
@@ -484,24 +450,92 @@ NSUInteger DeviceSystemMajorVersion()
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	
-	if (cell.reuseIdentifier == kDateCellID)
-	{
-
+	if (cell.reuseIdentifier == kDateCellID) {
 		
+		NSDictionary *itemData;
+		if (self.datePickerIndexPath == nil) {
+			itemData = [self.dataArray objectAtIndex:0];
+			[itemData setValue:@"Tap again to clock in" forKey:@"title"];
+			
+		} else {
+			itemData = [self.dataArray objectAtIndex:0];
+			[itemData setValue:@"Select time manually" forKey:@"title"];
+		}
+		
+		cell.textLabel.text = [itemData valueForKey:@"title"];
+
 		if (EMBEDDED_DATE_PICKER)
 			[self displayInlineDatePickerForRowAtIndexPath:indexPath];
 		else
 			[self displayExternalDatePickerForRowAtIndexPath:indexPath];
-	}
-	else
-	{
+		
+	} else if (indexPath.section == 0 && indexPath.row == 0) {
+
+		// tapping this cell passes the current date back to the model
+		if (self.currentShift) {
+			[self completeShiftAndPushHistoryView:[NSDate date]];
+		} else {
+			self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:[NSDate date]];
+			[self addCurrentShiftToTableView];
+		}
+		
+		return;
+		
+	} else {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
+	
+	// the cell was tapped a second time, releasing the dp indexPath, so we know we can pass the data to the model.
+	if ((indexPath.section != 0 && indexPath.row != 0) || self.datePickerIndexPath == nil) {
+		if (self.currentShift) {
+			[self completeShiftAndPushHistoryView:self.currentDateInDatePicker];
+
+		} else {
+
+			self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:self.currentDateInDatePicker];
+			[self addCurrentShiftToTableView];
+		}
+	}
+}
+
+- (void)completeShiftAndPushHistoryView:(NSDate *)endDate {
+	
+	[self.dao completeShift:self.currentShift endDate:endDate];
+	
+	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+	ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[sb instantiateViewControllerWithIdentifier:@"shiftDetails"];
+	sdvc.selectedJob = self.currentJob;
+	sdvc.selectedShift = self.currentShift;
+	sdvc.hidesBottomBarWhenPushed = YES;
+	
+	self.currentShift = nil;
+	[self removeCurrentShiftFromTableView];
+	
+	[self.navigationController pushViewController:sdvc animated:YES];
+}
+
+- (void)addCurrentShiftToTableView {
+	[self.tableView beginUpdates];
+	[self.tableView insertSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationBottom];
+	[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationBottom];
+	[self.tableView endUpdates];
+	
+	[self.tableView reloadData];
+
+}
+
+- (void)removeCurrentShiftFromTableView {
+	[self.tableView beginUpdates];
+	[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationBottom];
+	[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationTop];
+	[self.tableView endUpdates];
+	
+	[self.tableView reloadData];
+
 }
 
 
@@ -515,14 +549,11 @@ NSUInteger DeviceSystemMajorVersion()
 {
 	NSIndexPath *targetedCellIndexPath = nil;
 	
-	if ([self hasInlineDatePicker])
-	{
+	if ([self hasInlineDatePicker]) {
 		// inline date picker: update the cell's date "above" the date picker cell
 		//
-		targetedCellIndexPath = [NSIndexPath indexPathForRow:self.datePickerIndexPath.row - 1 inSection:0];
-	}
-	else
-	{
+		targetedCellIndexPath = [NSIndexPath indexPathForRow:self.datePickerIndexPath.row - 1 inSection:1];
+	} else {
 		// external date picker: update the current "selected" cell's date
 		targetedCellIndexPath = [self.tableView indexPathForSelectedRow];
 	}
@@ -537,27 +568,16 @@ NSUInteger DeviceSystemMajorVersion()
 	// update the cell's date string
 	cell.detailTextLabel.text = [self.dateFormatter stringFromDate:targetedDatePicker.date];
 	
-//	NSLog(@"%@", [self.dateFormatter stringFromDate:targetedDatePicker.date]);
+	self.currentDateInDatePicker = targetedDatePicker.date;
 	
 }
-
-- (void)popToHistoryView {
-	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	ShiftDetailsViewController *sdvc = (ShiftDetailsViewController *)[sb instantiateViewControllerWithIdentifier:@"shiftDetails"];
-	sdvc.selectedJob = self.currentJob;
-	sdvc.selectedShift = self.currentShift;
-	self.currentShift = nil;
-	[self.navigationController pushViewController:sdvc animated:YES];
-}
-
 
 /*! User chose to finish using the UIDatePicker by pressing the "Done" button
  (used only for "non-inline" date picker, iOS 6.1.x or earlier)
  
  @param sender The sender for this action: The "Done" UIBarButtonItem
  */
-- (void)doneButtonPressed
-{
+- (void)doneButtonPressed {
 	CGRect pickerFrame = self.pickerView.frame;
 	pickerFrame.origin.y = CGRectGetHeight(self.view.frame);
 	

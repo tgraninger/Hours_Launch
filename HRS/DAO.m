@@ -28,7 +28,7 @@
   self.model = [NSManagedObjectModel mergedModelFromBundles:nil];
   NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:self.model];
   NSString *path = [self archivePath];
-  //  NSLog(@"%@", path);
+//    NSLog(@"%@", path);
   NSURL *storeUrl = [NSURL fileURLWithPath:path];
   NSError *error;
   if (![psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
@@ -64,21 +64,28 @@
     abort();
   }
   if ([result count] != 0) {
+	  NSLog(@"%@", result);
     self.managedJobs = [NSMutableArray arrayWithArray:result];
   } else {
     [self addJob:@"Employer" title:@"JobTitle" wage:nil];
   }
 }
 
-- (Shift *)checkForIncompleteShiftForJob:(Job *)currentJob {
+- (Job *)passJobToView {
+	return [self.managedJobs objectAtIndex:0];
+}
+
+- (Shift *)checkForIncompleteShiftForJob:(Job *)job {
   //  Add shifts without end time to array and sort by most recent...
   NSMutableArray *incShifts = [NSMutableArray array];
-  for (Shift *shift in currentJob.shifts) {
+	NSArray *shifts = [job.shifts allObjects];
+  for (Shift *shift in shifts) {
     NSLog(@"%@", shift.startTime);
     if (!shift.endTime) {
       [incShifts addObject:shift];
     }
   }
+	
   if ([incShifts count] > 0) {
     self.hasIncompleteShifts = YES;
     [self sortByDate:incShifts];
@@ -123,9 +130,9 @@
   [self saveChanges];
 }
 
-- (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)currentDate {
+- (Shift *)addNewShiftForJob:(Job *)job startDate:(NSDate *)date {
   Shift *shift = [NSEntityDescription insertNewObjectForEntityForName:@"Shift" inManagedObjectContext:self.context];
-  [shift setStartTime:currentDate];
+  [shift setStartTime:date];
   [job addShiftsObject:shift];
   [self saveChanges];
   return shift;

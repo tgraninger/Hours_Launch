@@ -17,9 +17,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
-  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-  TabBarViewController *tb = (TabBarViewController *)[sb instantiateViewControllerWithIdentifier:@"TabBarVC"];
-  [tb popToClockInTab];
+//  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//  TabBarViewController *tb = (TabBarViewController *)[sb instantiateViewControllerWithIdentifier:@"TabBarVC"];
+//  [tb popToClockInTab];
   return YES;
 }
 
