@@ -110,7 +110,7 @@ static NSString *kOtherCell = @"otherCell";     // the remaining cells at the en
 	
 	self.dataForCurrentTime = [@{ kMainLabelKey : @"With current time",
 										kDateKey : [NSDate date] } mutableCopy];
-	NSMutableDictionary *itemTwo = [@{ kMainLabelKey : @"Select time manually",
+	NSMutableDictionary *itemTwo = [@{ kMainLabelKey : @"Tap to select date",
 										kDateKey : [NSDate date]} mutableCopy];
 	
 	self.dataArray = [NSMutableArray array];
@@ -240,6 +240,8 @@ NSUInteger DeviceSystemMajorVersion() {
 #pragma mark - UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	// accomodate picker size in row height if applicable.
 	return ([self indexPathHasPicker:indexPath] ? self.pickerCellRowHeight : self.tableView.rowHeight);
 }
 
@@ -315,9 +317,8 @@ NSUInteger DeviceSystemMajorVersion() {
 	NSMutableDictionary *itemData = self.dataArray[modelRow];
 
 	if (indexPath.section == 0) {
-		
+		// display current date in current date cell
 		NSDate *currentDate = [NSDate date];
-		
 		cell.textLabel.text = [currentDate getStartDate:currentDate];
 		cell.detailTextLabel.text = [currentDate getStartTime:currentDate];
 	}
@@ -334,6 +335,7 @@ NSUInteger DeviceSystemMajorVersion() {
 		//
 		cell.textLabel.text = [itemData objectForKey:kMainLabelKey];
 		cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[itemData valueForKey:kDateKey]];
+		cell.accessoryType = UITableViewCellAccessoryNone;
 
 	}
 	
@@ -455,7 +457,11 @@ NSUInteger DeviceSystemMajorVersion() {
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	
 	if (cell.reuseIdentifier == kDateCellID) {
-		
+		if (indexPath.section == 2) {
+			//	deselect the cell if user taps current shift cell
+			[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		} else {
+			
 		NSDictionary *itemData;
 		if (self.datePickerIndexPath == nil) {
 			itemData = [self.dataArray objectAtIndex:0];
@@ -472,6 +478,7 @@ NSUInteger DeviceSystemMajorVersion() {
 			[self displayInlineDatePickerForRowAtIndexPath:indexPath];
 		else
 			[self displayExternalDatePickerForRowAtIndexPath:indexPath];
+		}
 		
 	} else if (indexPath.section == 0 && indexPath.row == 0) {
 
@@ -490,15 +497,23 @@ NSUInteger DeviceSystemMajorVersion() {
 	}
 	
 	// the cell was tapped a second time, releasing the dp indexPath, so we know we can pass the data to the model.
-	if ((indexPath.section != 0 && indexPath.row != 0) || self.datePickerIndexPath == nil) {
+	if ((indexPath.section == 1) && self.datePickerIndexPath == nil) {
 		if (self.currentShift) {
-			[self completeShiftAndPushHistoryView:self.currentDateInDatePicker];
+			[self completeShiftAndPushHistoryView:[self checkForNullDate]];
 
 		} else {
-
-			self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:self.currentDateInDatePicker];
+//			NSLog(@"%@", self.pickerView.date);
+			self.currentShift = [self.dao addNewShiftForJob:self.currentJob startDate:[self checkForNullDate]];
 			[self addCurrentShiftToTableView];
 		}
+	}
+}
+
+- (NSDate *)checkForNullDate {
+	if (!self.currentDateInDatePicker) {
+		return [NSDate date];
+	} else {
+		return self.currentDateInDatePicker;
 	}
 }
 

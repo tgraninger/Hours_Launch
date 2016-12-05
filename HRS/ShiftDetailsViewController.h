@@ -19,6 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startLabel;
 @property (weak, nonatomic) IBOutlet UILabel *outLabel;
-@property (weak, nonatomic) IBOutlet UILabel *payLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *payLabel;
 
 @end
