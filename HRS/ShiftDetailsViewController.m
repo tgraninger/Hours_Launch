@@ -25,17 +25,6 @@
 	
 	[self displayDetailsForShift];
 
-	
-//  NSArray *labels = @[self.dateLabel, self.hoursLabel, self.startLabel, self.outLabel];
-//  for (UILabel *label in labels) {
-//    CALayer *layer = [label layer];
-//    CALayer *bottomBorder = [CALayer layer];
-//    bottomBorder.borderColor = [UIColor darkGrayColor].CGColor;
-//    bottomBorder.borderWidth = 1;
-//    bottomBorder.frame = CGRectMake(-1, label.frame.size.height-1, label.frame.size.width, 1);
-//    [bottomBorder setBorderColor:[UIColor blueColor].CGColor];
-//    [layer addSublayer:bottomBorder];
-//  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,10 +44,6 @@
 	self.outLabel.text = [self.selectedShift.endTime getEndTime:self.selectedShift.endTime];
 	double hours = [[[DAO sharedInstance]hoursBetween:self.selectedShift.startTime and:self.selectedShift.endTime]doubleValue];
 	self.hoursLabel.text = [NSString stringWithFormat:@"%.2f", hours];
-	if (self.selectedJob.hourlyWage) {
-	self.payLabel.text = [NSString stringWithFormat:@"$%.2f", [[[DAO sharedInstance]calculateShiftPay:self.selectedShift
-																							   forJob:self.selectedJob]doubleValue]];
-	}
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
